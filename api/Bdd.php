@@ -16,6 +16,7 @@ class BdD{
     {
        BdD::connect($this->servername, $this->username, $this->password, $this->database);
     }
+    public static $connection;
     public static function connect($servername, $username, $password, $database) {
 		if (!isset(self::$connection)) {
 			self::$connection = @new PDO(
@@ -27,20 +28,47 @@ class BdD{
 		}
     }
     //Aquesta funcio en mira si el usuari que en han pasat las dades existeix
-    public static function comprobarExisteix($nom,$contrasenya,$token){
-        $SQL = "SELECT * FROM usuari WHERE name = :nom and :contrasenya";
+    public function comprobarExisteix($email,$contrasenya){//buscamos por usuario contraseña si lo encuentra update
+        $SQL = "SELECT * FROM usuari WHERE email = :email and :contrasenya";
         $consulta = (BdD::$connection)->prepare($SQL);
-        $consulta->bindParam(':nom',$nom);
+        $consulta->bindParam(':email',$email);
         $consulta->bindParam(':contrasenya',$contrasenya);
         $qFiles = $consulta->execute(); 
-        if ($consulta->rowCount() > 0)
-                //si devuelve true le hacemos la isercion a ese usuario de su token
+        if ($consulta->rowCount() > 0){
+                $token=$this->tokenAleatorio();
+                $this->insertarToken_usuari_por_usuario($token,$email,$contrasenya);
             return true;
+        }
         else
             return false;
     }
-    public static function crearUsuari($nom,$cognom,$contrasenya,$email,$rol,$apiKey,$token){
-        $sql="INSERT (nom,cognom,contrasenya,email,rol,apiKey,token) VALUES (:nom,cognom,:contrasenya,:email,:rol,:apiKey,:token)"
+    
+    public function comprobarExisteixPerToken($tokenAntic){//despues del login buscamos por el token
+        $resposta=null;
+        $SQL = "SELECT * FROM usuari WHERE token = :tokenAntic";
+        $consulta = (BdD::$connection)->prepare($SQL);
+        $consulta->bindParam(':tokenAntic',$tokenAntic);
+        $qFiles = $consulta->execute(); 
+        if ($consulta->rowCount() > 0){
+            //asosiamos el resultado en un array para tener acceso a el
+            $consulta->setFetchMode(PDO::FETCH_ASSOC); 
+			$result = $consulta->fetchAll();
+            foreach($result as $fila)
+            {
+				$resposta[] = $fila;
+            }
+            //creamos el nuevo token
+            $token=$this->tokenAleatorio_datosUsuario($resposta[0]["email"]);
+            //agregamos el nuevo token
+            $this->insertarToken_usuari_por_token($tokenAntic,$token);
+            return true;
+        }
+        else
+            return false;
+    }
+    //creacion de usuario con todos sus datos
+    public function crearUsuari($nom,$cognom,$contrasenya,$email,$rol,$apiKey){
+        $SQL="INSERT INTO usuari (nom,cognom,contrasenya,email,rol,apiKey) VALUES (:nom,:cognom,:contrasenya,:email,:rol,:apiKey,)";
         $consulta = (BdD::$connection)->prepare($SQL);
         $consulta->bindParam(':nom',$nom);
         $consulta->bindParam(':contrasenya',$contrasenya);
@@ -48,9 +76,211 @@ class BdD{
         $consulta->bindParam(':email',$email);
         $consulta->bindParam(':rol',$rol);
         $consulta->bindParam(':apiKey',$apiKey);
-        $consulta->bindParam(':apiKey',$apiKey);
         $qFiles = $consulta->execute();
     }
+    //creacion de tasca con todos sus datos
+    public function crearTasca($nom,$descripicio,$prioritat,$estat,$comentari,$direccio,$empleat,$equipLocal,$equipVisitant, $dataCreacio){
+        $SQL="INSERT INTO tasca (nom,descripicio,prioritat,estat,comentari,direccio,empleat,equipLocal,equipVisitant,dataCreacio  ) VALUES (:nom,:descripicio,:prioritat,:estat,:comentari,:direccio,:empleat,:equipLocal,:equipVisitant,:dataCreacio)";
+        $consulta = (BdD::$connection)->prepare($SQL);
+        $consulta->bindParam(':nom',$nom);
+        $consulta->bindParam(':descripicio',$descripicio );
+        $consulta->bindParam(':prioritat',$prioritat);
+        $consulta->bindParam(':estat',$estat);
+        $consulta->bindParam(':comentari',$comentari );
+        $consulta->bindParam(':direccio',$direccio );
+        $consulta->bindParam(':empleat',$empleat );
+        $consulta->bindParam(':equipLocal',$equipLocal );
+        $consulta->bindParam(':equipVisitant',$equipVisitant );
+        $consulta->bindParam(':dataCreacio',$dataCreacio );
+        $qFiles = $consulta->execute();
+    }
+    //buscamos las tascas del usuario
+    public function veureTasquesUsuari($idUsuario){
+        $resposta = null;
+        $SQL = 'SELECT * FROM tasca WHERE empleat = :empleat';
+        $consulta = (BdD::$connection)->prepare($SQL);
+        $consulta->bindParam(':empleat',$idUsuario);
+        $qFiles = $consulta->execute();
+        if ($consulta->rowCount() > 0) 
+        {
+			$consulta->setFetchMode(PDO::FETCH_ASSOC); 
+			$result = $consulta->fetchAll();
+            foreach($result as $fila)
+            {
+				$resposta[] = $fila;
+            }
+            return $resposta;
+        }
+        else {
+            return false;
+        }
+
+    }
+    public function veureTasques(){
+        $resposta = null;
+        $SQL = 'SELECT * FROM tasca';
+        $consulta = (BdD::$connection)->prepare($SQL);
+        $qFiles = $consulta->execute();
+        if ($consulta->rowCount() > 0) 
+        {
+			$consulta->setFetchMode(PDO::FETCH_ASSOC); 
+			$result = $consulta->fetchAll();
+            foreach($result as $fila)
+            {
+				$resposta[] = $fila;
+            }
+            return $resposta;
+        }
+        else {
+            return false;
+        }
+
+    }
+    public function updateTasca($idTasca,$comentari,$estat){
+        $SQL ='UPDATE tasca SET comentari = :comentari, estat = :estat WHERE idTasca = :idTasca';
+        $consulta = (BdD::$connection)->prepare($SQL);
+        $consulta->bindParam(':idTasca',$idTasca);
+        $consulta->bindParam(':comentari',$comentari);
+        $consulta->bindParam(':estat',$estat);
+        $qFiles = $consulta->execute();
+    }
+    public function updateTascaAdmin($idTasca,$nom,$descripicio,$prioritat,$estat,$comentari,$direccio,$empleat,$equipLocal,$equipVisitant,$dataCreacio){
+        $SQL='UPDATE tasca SET nom = :nom, descripicio = :descripicio, prioritat = :prioritat, estat = :estat, comentari = :comentari, direccio = :direccio,empleat= :empleat, equipLocal = :equipLocal, equipVisitant = :equipVisitant,dataCreacio=:dataCreacio WHERE idTasca = :idTasca';
+        $consulta = (BdD::$connection)->prepare($SQL);
+        $consulta->bindParam(':idTasca',$idTasca);
+        $consulta->bindParam(':nom',$nom);
+        $consulta->bindParam(':comentari',$comentari);
+        $consulta->bindParam(':prioritat',$prioritat);
+        $consulta->bindParam(':estat',$estat);
+        $consulta->bindParam(':descripicio',$descripicio);
+        $consulta->bindParam(':direccio',$direccio);
+        $consulta->bindParam(':empleat',$empleat);
+        $consulta->bindParam(':equipLocal',$equipLocal);
+        $consulta->bindParam(':equipVisitant',$equipVisitant);
+        $consulta->bindParam(':dataCreacio',$dataCreacio);
+        $qFiles = $consulta->execute();
+    }
+
+
+    public function veureUsers(){
+        $resposta = null;
+        $SQL = 'SELECT * FROM usuari';
+        $consulta = (BdD::$connection)->prepare($SQL);
+        $qFiles = $consulta->execute();
+        if ($consulta->rowCount() > 0) 
+        {
+			$consulta->setFetchMode(PDO::FETCH_ASSOC); 
+			$result = $consulta->fetchAll();
+            foreach($result as $fila)
+            {
+				$resposta[] = $fila;
+            }
+            return $resposta;
+        }
+        else {
+            return false;
+        }
+    }
+    public function updateUsuari($nom,$cognom,$contrasenya,$email,$rol,$apiKey,$idUsuari){
+        $SQL='UPDATE usuari SET rol=:rol,nom=:nom,cognom=:cognom,email=:email,contrasenya=:contrasenya,apiKey=:apiKey WHERE :idUsuari';
+        $consulta = (BdD::$connection)->prepare($SQL);
+        $consulta->bindParam(':nom',$nom);
+        $consulta->bindParam(':contrasenya',$contrasenya);
+        $consulta->bindParam(':cognom',$cognom);
+        $consulta->bindParam(':email',$email);
+        $consulta->bindParam(':rol',$rol);
+        $consulta->bindParam(':apiKey',$apiKey);
+        $consulta->bindParam(':idUsuari',$idUsuari);
+        $qFiles = $consulta->execute();
+    }
+    public function existeixToken_bbd_token($token){
+        $SQL='SELECT * FROM tokenbd WHERE token=:token';
+        $consulta = (BdD::$connection)->prepare($SQL);
+        $consulta->bindParam(':token',$token);
+        $qFiles = $consulta->execute();
+        if ($consulta->rowCount() > 0)
+              return true;
+        else
+             return false;
+    }
+
+    public function existeixToken_bbd_usuari($token){
+        $SQL='SELECT * FROM usuari WHERE token=:token';
+        $consulta = (BdD::$connection)->prepare($SQL);
+        $consulta->bindParam(':token',$token);
+        $qFiles = $consulta->execute();
+        if ($consulta->rowCount() > 0)
+              return true;
+        else
+             return false;
+    }
+    //inserta token despues de cada accion que se hace
+    public function insertarToken_usuari_por_token($tokenAntic,$token){
+        $SQL='UPDATE usuari SET token=:token WHERE token=:tokenAntic';
+        $consulta = (BdD::$connection)->prepare($SQL);
+        $consulta->bindParam(':token',$token);
+        $consulta->bindParam(':tokenAntic',$tokenAntic);
+        $qFiles = $consulta->execute();
+        return true;
+    }
+    //inserta el primer token al usuario, el token esta en null se lo encuentra por email y contraseña
+    public function insertarToken_usuari_por_usuario($token, $email,$contrasenya){
+        $SQL='UPDATE usuari SET token=:token WHERE email=:email and contrasenya=:contrasenya';
+        $consulta = (BdD::$connection)->prepare($SQL);
+        $consulta->bindParam(':token',$token);
+        $consulta->bindParam(':email',$email);
+        $consulta->bindParam(':contrasenya',$contrasenya);
+        $qFiles = $consulta->execute();   
+    }
+    public function recuperarEquips(){
+        $resposta=null;
+        $SQL='SELECT * FROM equip';
+        $consulta = (BdD::$connection)->prepare($SQL);
+        $qFiles = $consulta->execute(); 
+        if ($consulta->rowCount() > 0) 
+        {
+			$consulta->setFetchMode(PDO::FETCH_ASSOC); 
+			$result = $consulta->fetchAll();
+            foreach($result as $fila)
+            {
+				$resposta[] = $fila;
+            }
+            return $resposta;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public function borrarToken_token_bdd($token){
+        //primero miramos si el token existe
+        if($this->existeixToken_bbd_token($token)){
+            $SQL='DELETE FROM `tokenbd` WHERE token=:token';
+            $consulta = (BdD::$connection)->prepare($SQL);
+            $consulta->bindParam(':token',$token);
+            $qFiles = $consulta->execute();
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    public function tokenAleatorio(){
+        $caracteres_permitidos = '0kjkjlj123456789abcdefghijklmno897897pqrstuvwxyzABCDEFGHI6546JKLMNOPQRSTUVWXYZ';
+        $longitud = 25;
+        return substr(str_shuffle($caracteres_permitidos), 0, $longitud);
+    }
+    public function tokenAleatorio_datosUsuario($email){
+        $caracteres_permitidos = '0kjkjlj123456789abcdefghijklmno897897pqrstuvwxyzABCDEFGHI6546JKLMNOPQRSTUVWXYZ';
+        $longitud = 6;
+        $resultado= md5(substr(str_shuffle($caracteres_permitidos), 0, $longitud).$email);
+        return $resultado;
+       
+    }
+    
 }
+$prueba=new BdD();
+
+var_dump( $prueba->comprobarExisteixPerToken("9SjtgZBrfVqjrodrigues@gmail.com"));
 
 ?>
