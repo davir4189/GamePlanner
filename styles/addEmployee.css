@@ -1,0 +1,172 @@
+#app{
+    width: 100%;
+}
+
+/* HEADER */
+
+body{
+    font-family: sans-serif;
+    background-color: white;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.header{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.header-1{
+    width: 50%;
+    padding: 30px;
+    display: flex;
+    flex-direction: row;
+}
+
+.header-2{
+    width: 50%;
+    text-align: right;
+    padding: 30px;
+}
+
+.role2{
+    font-weight: 900;
+    padding-left: 30px;
+}
+
+/* BODY */
+
+.container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.dades1{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    width: 60%;
+    background-color: rgb(0, 88, 0);
+    padding: 30px;
+}
+
+.dades2{
+    width: 40%;
+    text-align: center;
+    margin: 20px;
+    padding: 10px;
+}
+
+.dades3{
+    width: 80%;
+    text-align: center;
+    margin: 20px;
+    padding: 10px;
+}
+
+.button-2{
+    background-color: rgb(0, 88, 0);
+    color: rgb(255, 255, 255);
+    font-weight: 900;
+    border: 0;
+    padding: 10px;
+    width: 30%;
+    cursor: pointer;
+    border: 1px solid rgb(0, 88, 0);
+}
+
+.button-2:hover{
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 88, 0);
+    border: 1px solid rgb(0, 88, 0);
+    transition: 0.3s;
+}
+
+.button-1{
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 88, 0);
+    font-weight: 900;
+    border: 0;
+    padding: 10px;
+    width: 30%;
+    cursor: pointer;
+    border: 1px solid rgb(0, 88, 0);
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.button-1:hover{
+    background-color: rgb(0, 88, 0);
+    color: rgb(255, 255, 255);
+    border: 1px solid rgb(0, 88, 0);
+    transition: 0.3s;
+}
+
+
+/* FOOTER */
+
+.footer{
+    text-align: center;
+    margin-top: auto;
+    background-color: rgb(0, 88, 0);
+    font-weight: 900;
+    color: white;
+}
+
+/* RESPONSIVE */
+
+@media  screen and (max-width: 1000px) {
+    .dades1{
+        width: 80%;
+    }
+}
+
+@media  screen and (max-width: 800px) {
+    .dades2{
+        width: 80%;
+    }
+
+    .button-2{
+        width: 50%;
+    }
+}
+
+@media  screen and (max-width: 500px) {
+    .button-2{
+        width: 80%;
+    }
+
+    .header{
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .header-1{
+        display: none;
+    }
+
+    .header-2{
+        width: 100%;
+        text-align: center;
+        padding: 0;
+        margin-top: 20px;
+        padding-bottom: 10px;
+    }
+
+    .role2{
+        display: none;
+    }
+
+    .button-1{
+        width: 80%;
+    }
+}

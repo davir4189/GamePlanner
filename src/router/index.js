@@ -4,7 +4,8 @@ import gestioTasca from '../views/gestioTasca'
 import gestioUsuari from '../views/gestioUsuari'
 import iniciOpcions from '../views/iniciOpcions'
 import misTrabajos from '../views/misTrabajos'
-import treballadorsGestio from '../views/treballadorsGestio'
+import tasques from '../views/tasques'
+import usuaris from '../views/usuaris'
 
 const routes = [
   {
@@ -13,32 +14,55 @@ const routes = [
     component:loginUsuaris
   },
   {
-    path: '/',
-    name: '/gestioTasca',
+    path: '/works',
+    name: 'works',
+    component:tasques
+  },
+  {
+    path: '/works/addWork',
+    name: 'addWork',
     component:gestioTasca
   },
   {
-    path: '/',
-    name: '/gestioUsuari',
+    path: '/works/editWork',
+    name: 'editWork',
+    component:gestioTasca
+  },
+  {
+    path: '/employees',
+    name: 'employees',
+    component:usuaris
+  },
+  {
+    path: '/employees/addEmployee',
+    name: 'addEmployee',
     component:gestioUsuari
   },
   {
-    path: '/',
-    name: '/misTrabajos',
+    path: '/employees/editEmployee',
+    name: 'editEmployee',
+    component:gestioUsuari
+  },
+  {
+    path: '/myWorks',
+    name: 'myWorks',
     component:misTrabajos
   },
   {
-    path: '/',
-    name: '/iniciOpcions',
+    path: '/admin',
+    name: 'admin',
     component:iniciOpcions
   },
   {
-    path: '/',
-    name: '/treballadorsGestio',
-    component:treballadorsGestio
+    path: '/manager',
+    name: 'manager',
+    component:iniciOpcions
   },
-  
-  
+  {
+    path: '/technical',
+    name: 'technical',
+    component:iniciOpcions
+  }
 ]
 
 const router = createRouter({
