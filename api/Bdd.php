@@ -4,7 +4,12 @@ class BdD{
     private $username = "root";
     private $password = "";
     private $database = "gameplanner";
-
+    
+    private static $settings = array(
+		PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+		PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
+		PDO::ATTR_EMULATE_PREPARES => false,
+	);
 
     //funció constructor
     public function __construct()
@@ -33,6 +38,18 @@ class BdD{
             return true;
         else
             return false;
+    }
+    public static function crearUsuari($nom,$cognom,$contrasenya,$email,$rol,$apiKey,$token){
+        $sql="INSERT (nom,cognom,contrasenya,email,rol,apiKey,token) VALUES (:nom,cognom,:contrasenya,:email,:rol,:apiKey,:token)"
+        $consulta = (BdD::$connection)->prepare($SQL);
+        $consulta->bindParam(':nom',$nom);
+        $consulta->bindParam(':contrasenya',$contrasenya);
+        $consulta->bindParam(':cognom',$cognom);
+        $consulta->bindParam(':email',$email);
+        $consulta->bindParam(':rol',$rol);
+        $consulta->bindParam(':apiKey',$apiKey);
+        $consulta->bindParam(':apiKey',$apiKey);
+        $qFiles = $consulta->execute();
     }
 }
 
