@@ -5,44 +5,49 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="./myWorks.css" rel="stylesheet" type="text/css" content="width=device-width, initial-scale=1.0">
-        <title>My Works</title>
+        <title>Employees</title>
     </head>
     <body>
         <div class="header">
             <div class="header-1">
-                <img src="../../images/logo.png" width="50" height="50" alt="Logo Game Planner"><p class="role">My Works</p>
+                <img src="../../images/logo.png" width="50" height="50" alt="Logo Game Planner" title="Game Planner"><p class="role2">Employees</p>
             </div>
             <div class="header-2"><button class="button-2" id="goBack">GO BACK</button></div>
         </div>
-        
+
         <div>
             <hr>
         </div>
 
-        <div class="container">
-            <myWorks>
-
-            </myWorks>
+        <div class="containerButton">
+            <button class="button-2" id="addEmployee">Add Employee</button>
         </div>
+
+        <div class="container">
+            <usuarisCaixes>
+                
+            </usuarisCaixes>
+        </div>    
 
         <div class="footer">
             <p>Game Planner</p>
         </div>
-
     </body>
     </html>
+
 </template>
 
 <script>
-    import myWorks from '@/components/myWorks.vue'
 
-    export default{
-        name:"misTrabajos",
-        components:{myWorks}
-    }
+import usuarisCaixes from '@/components/usuarisCaixes.vue';
+
+export default{
+    name:"totsUsuaris",
+    components:{usuarisCaixes}
+}
+
 </script>
-    
-<style src="../../styles/myWorks.css">
+
+<style src="../../styles/employees.css" scoped>
 
 </style>

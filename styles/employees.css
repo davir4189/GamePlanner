@@ -1,0 +1,200 @@
+#app{
+    width: 100%;
+}
+
+body{
+    font-family: sans-serif;
+    background-color: white;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.header{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.header-1{
+    width: 50%;
+    padding: 30px;
+    display: flex;
+    flex-direction: row;
+}
+
+.header-2{
+    width: 50%;
+    text-align: right;
+    padding: 30px;
+}
+
+.role2{
+    font-weight: 900;
+    padding-left: 30px;
+}
+
+
+/* ----------- */
+
+.containerButton{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.container{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.container-1{
+    width: 25%;
+    background-color: rgb(0, 88, 0);
+    padding: 30px;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.container-2{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-bottom: 20px;
+    padding-top: 10px;
+}
+
+.name{
+    font-size: 1.3em;
+    font-weight: 700;
+    color: white;
+}
+
+.role{
+    color: white;
+}
+
+.button{
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 88, 0);
+    font-weight: 900;
+    border: 0;
+    padding: 10px;
+    width: 40%;
+    cursor: pointer;
+    border: 1px solid white;
+}
+
+.button:hover{
+    background-color: rgb(0, 88, 0);
+    color: rgb(255, 255, 255);
+    border: 1px solid white;
+    transition: 0.3s;
+}
+
+.button-2{
+    background-color: rgb(0, 88, 0);
+    color: rgb(255, 255, 255);
+    font-weight: 900;
+    border: 0;
+    padding: 10px;
+    width: 30%;
+    cursor: pointer;
+    border: 1px solid rgb(0, 88, 0);
+}
+
+.button-2:hover{
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 88, 0);
+    border: 1px solid rgb(0, 88, 0);
+    transition: 0.3s;
+}
+
+/* FOOTER */
+
+.footer{
+    text-align: center;
+    margin-top: auto;
+    background-color: rgb(0, 88, 0);
+    font-weight: 900;
+    color: white;
+}
+
+/* RESPONSIVE */
+
+@media only screen and (max-width: 900px) {
+    .container-1{
+        width: 30%;
+    }
+
+    .button-2{
+        width: 50%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .container-1{
+        width: 60%;
+    }
+
+    .header{
+        flex-direction: column;
+    }
+
+    .header-1{
+        display: none;
+    }
+
+    .header-2{
+        width: 100%;
+        text-align: center;
+        padding: 0;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
+    .button-2{
+        width: 80%;
+    }
+}
+
+@media only screen and (max-width: 300px) {
+    .container-1{
+        width: 60%;
+    }
+
+    .header{
+        flex-direction: column;
+    }
+
+    .header-1{
+        width: 100%;
+        text-align: center;
+        padding: 0;
+        margin-top: 10px;
+    }
+
+    .header-2{
+        width: 100%;
+        text-align: center;
+        padding: 0;
+        margin-top: 10px;
+    }
+
+    .button-2{
+        width: 60%;
+    }
+}
+
+
