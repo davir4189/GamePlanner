@@ -13,7 +13,11 @@
             <div class="header-1">
                 <img src="../../images/logo.png" width="50" height="50" alt="Logo Game Planner"><p class="role">My Works</p>
             </div>
-            <div class="header-2"><button class="button-2" id="goBack">GO BACK</button></div>
+            <div class="header-2">
+                <RouterLink to="/amin">
+                    <button class="button-2" id="goBack">GO BACK</button>
+                </RouterLink>
+            </div>
         </div>
         
         <div>

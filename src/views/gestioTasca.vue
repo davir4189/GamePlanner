@@ -14,7 +14,11 @@
             <div class="header-1">
                 <img src="../../images/logo.png" width="50" height="50" alt=""><p class="role2" title="Page">Add Work</p>
             </div>
-            <div class="header-2"><button class="button-2" id="goBack">GO BACK</button></div>
+            <div class="header-2">
+                <RouterLink to="/admin">
+                    <button class="button-2" id="goBack">GO BACK</button>
+                </RouterLink>
+            </div>
         </div>
 
         <div>

@@ -26,10 +26,12 @@
         </div>
     </div>
 
-    <div class="container">
-        <button class="button-1" id="addEmployee">EDIT EMPLOYEE</button>
-    </div>
-
+    <RouterLink to="/employees">
+        <div class="container">
+            <button class="button-1" id="addEmployee">EDIT EMPLOYEE</button>
+        </div>
+    </RouterLink>
+    
 </template>
 <script>
 export default{

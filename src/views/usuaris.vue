@@ -12,16 +12,22 @@
             <div class="header-1">
                 <img src="../../images/logo.png" width="50" height="50" alt="Logo Game Planner" title="Game Planner"><p class="role2">Employees</p>
             </div>
-            <div class="header-2"><button class="button-2" id="goBack">GO BACK</button></div>
+            <div class="header-2">
+                <RouterLink to="/admin">
+                    <button class="button-2" id="goBack">GO BACK</button>
+                </RouterLink>
+            </div>
         </div>
 
         <div>
             <hr>
         </div>
 
-        <div class="containerButton">
-            <button class="button-2" id="addEmployee">Add Employee</button>
-        </div>
+        <RouterLink to="employees/addEmployee">
+            <div class="containerButton">
+                <button class="button-2" id="addEmployee">Add Employee</button>
+            </div>
+        </RouterLink>
 
         <div class="container">
             <usuarisCaixes>

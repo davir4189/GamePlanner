@@ -1,7 +1,9 @@
 <template>
         <input type="text" class="email" name="email" id="email" title="Email" placeholder="Email">
         <input type="password" class="password" name="password" id="password" title="Password" placeholder="Password">
-        <button class="button-login" id="buttonLogin" name="buttonLogin">Log In</button>
+        <RouterLink to="/admin">
+            <button class="button-login" id="buttonLogin" name="buttonLogin">Log In</button>
+        </RouterLink>
 </template>
 
 <script>

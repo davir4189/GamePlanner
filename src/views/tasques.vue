@@ -12,16 +12,23 @@
             <div class="header-1">
                 <img src="../../images/logo.png" width="50" height="50" alt=""><p class="role">Works</p>
             </div>
-            <div class="header-2"><button class="button-2" id="goBack">GO BACK</button></div>
+                <div class="header-2">
+                    <RouterLink to="/admin">
+                        <button class="button-2" id="goBack">GO BACK</button>
+                    </RouterLink> 
+                </div>
+               
         </div>
 
         <div>
             <hr>
         </div>
 
-        <div class="containerButton">
-            <button class="button-2">ADD TASK</button>
-        </div>
+        <RouterLink to="/works/addWork">
+            <div class="containerButton">
+                    <button class="button-2">ADD TASK</button>
+            </div>
+        </RouterLink>
 
         <div class="container">
             <tasquesCaixes>
