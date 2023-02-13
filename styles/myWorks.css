@@ -4,6 +4,10 @@
 
 /* HEADER */
 
+#app{
+    width: 100%;
+}
+
 body{
     font-family: sans-serif;
     background-color: white;
@@ -17,11 +21,12 @@ body{
     width: 100%;
     display: flex;
     flex-direction: row;
+    align-items: center;
 }
 
 .header-1{
     width: 50%;
-    padding: 30px;
+    padding: 20px;
     display: flex;
     flex-direction: row;
 }
@@ -29,7 +34,7 @@ body{
 .header-2{
     width: 50%;
     text-align: right;
-    padding: 30px;
+    padding: 20px;
 }
 
 .role{

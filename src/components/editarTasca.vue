@@ -48,9 +48,11 @@
             </div>
         </div>
 
-        <div class="container">
-            <button class="button-1" id="addWork">EDIT WORK</button>
-        </div>
+        <RouterLink to="/works">
+            <div class="container">
+                <button class="button-1" id="addWork">EDIT WORK</button>
+            </div>
+        </RouterLink>
 
 </template>
 

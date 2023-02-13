@@ -84,10 +84,12 @@ html, body{
     }
 
     .div1{
+        padding-top: 30px;
         width: 100%;
     }
 
     .div2{
+        margin-top: 30px;
         width: 100%;
     }
 }

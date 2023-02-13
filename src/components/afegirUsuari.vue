@@ -26,9 +26,11 @@
         </div>
     </div>
 
-    <div class="container">
-        <button class="button-1" id="addEmployee">ADD EMPLOYEE</button>
-    </div>
+    <RouterLink to="/employees">
+        <div class="container">
+            <button class="button-1" id="addEmployee">ADD EMPLOYEE</button>
+        </div>
+    </RouterLink>
 
 </template>
 

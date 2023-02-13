@@ -1,10 +1,14 @@
 <template>
     <div class="div1">
-        <button class="works" id="works" name="works">WORKS</button>
+        <RouterLink to="/works">
+            <button class="works" id="works" name="works">WORKS</button>
+        </RouterLink>
     </div>
 
     <div class="div2">
-        <button class="employees" id="employees" name="employees">EMPLOYEES</button>
+        <RouterLink to="/employees">
+            <button class="employees" id="employees" name="employees">EMPLOYEES</button>
+        </RouterLink>
     </div>  
 </template>
 
