@@ -35,9 +35,10 @@ class BdD{
         $consulta->bindParam(':contrasenya',$contrasenya);
         $qFiles = $consulta->execute(); 
         if ($consulta->rowCount() > 0){
-                $token=$this->tokenAleatorio();
+                $token=$this->tokenAleatorio_datosUsuario($email);
+                setcookie("token", $token,+time()+3600,'/')//creamos una cookie //agregamos el nuevo token hace update
                 $this->insertarToken_usuari_por_usuario($token,$email,$contrasenya);
-            return true;
+            return $token;
         }
         else
             return false;
@@ -59,7 +60,7 @@ class BdD{
             }
             //creamos el nuevo token
             $token=$this->tokenAleatorio_datosUsuario($resposta[0]["email"]);
-            //agregamos el nuevo token
+            //agregamos el nuevo token hace update
             $this->insertarToken_usuari_por_token($tokenAntic,$token);
             return true;
         }
@@ -109,7 +110,7 @@ class BdD{
             {
 				$resposta[] = $fila;
             }
-            return $resposta;
+            echo json_encode($resposta);//retornamos los datos
         }
         else {
             return false;
@@ -129,7 +130,7 @@ class BdD{
             {
 				$resposta[] = $fila;
             }
-            return $resposta;
+            echo json_encode($resposta);//retornamos los datos
         }
         else {
             return false;
@@ -175,7 +176,7 @@ class BdD{
             {
 				$resposta[] = $fila;
             }
-            return $resposta;
+            echo json_encode($resposta);//retornamos los datos
         }
         else {
             return false;
@@ -232,6 +233,12 @@ class BdD{
         $consulta->bindParam(':contrasenya',$contrasenya);
         $qFiles = $consulta->execute();   
     }
+    public function insertarToken_token($token){
+        $SQL='INSERT INTO tokenbd (token) VALUES (:token);';
+        $consulta = (BdD::$connection)->prepare($SQL);
+        $consulta->bindParam(':token',$token);
+        $qFiles = $consulta->execute(); 
+    }
     public function recuperarEquips(){
         $resposta=null;
         $SQL='SELECT * FROM equip';
@@ -245,12 +252,14 @@ class BdD{
             {
 				$resposta[] = $fila;
             }
-            return $resposta;
+            echo json_encode($resposta);//retornamos los datos
         }
         else {
             return false;
         }
     }
+    //falta select equipo local
+
 
     public function borrarToken_token_bdd($token){
         //primero miramos si el token existe
@@ -265,11 +274,7 @@ class BdD{
             return false;
         }
     }
-    public function tokenAleatorio(){
-        $caracteres_permitidos = '0kjkjlj123456789abcdefghijklmno897897pqrstuvwxyzABCDEFGHI6546JKLMNOPQRSTUVWXYZ';
-        $longitud = 25;
-        return substr(str_shuffle($caracteres_permitidos), 0, $longitud);
-    }
+   
     public function tokenAleatorio_datosUsuario($email){
         $caracteres_permitidos = '0kjkjlj123456789abcdefghijklmno897897pqrstuvwxyzABCDEFGHI6546JKLMNOPQRSTUVWXYZ';
         $longitud = 6;
@@ -279,8 +284,5 @@ class BdD{
     }
     
 }
-$prueba=new BdD();
-
-var_dump( $prueba->comprobarExisteixPerToken("9SjtgZBrfVqjrodrigues@gmail.com"));
 
 ?>
