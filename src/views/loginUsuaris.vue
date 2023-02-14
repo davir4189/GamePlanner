@@ -25,10 +25,20 @@
 
 <script>
     import loginComponent from '@/components/loginComponent.vue';
+    import axios from 'axios';
 
     export default{
         name:"loginUsuaris",
-        components:{loginComponent}
+        components: {
+            loginComponent,
+        },
+        methods: {
+
+        },
+        created(){
+            axios.get('http://localhost/api/')
+                .then((e) => {console.log(e)})
+        }
     }
 </script>
 
