@@ -36,7 +36,6 @@ class BdD{
         $qFiles = $consulta->execute(); 
         if ($consulta->rowCount() > 0){
                 $token=$this->tokenAleatorio_datosUsuario($email);
-                setcookie("token", $token,+time()+3600,'/')//creamos una cookie //agregamos el nuevo token hace update
                 $this->insertarToken_usuari_por_usuario($token,$email,$contrasenya);
             return $token;
         }

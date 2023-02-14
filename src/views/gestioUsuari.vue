@@ -27,9 +27,21 @@
         <afegirUsuari></afegirUsuari>
         <editarUsuari></editarUsuari>
 
-        <div class="footer">
-            <p>Game Planner</p>
-        </div>
+        <footer>
+            <div class="footer">
+                <div class="ft1">
+                    <img src="../../images/facebook.png" alt="" width="30" height="30" class="imgFooter">
+                    <img src="../../images/instagram.png" alt="" width="30" height="30" class="imgFooter">
+                    <img src="../../images/twitter.png" alt="" width="30" height="30" class="imgFooter">
+                </div>
+
+                <div class="ft2">
+                    <button class="ft3">Privacy policy</button>
+                    <button class="ft3">Legal warning</button>
+                    <button class="ft3">Cookies policy</button>
+                </div>
+            </div>    
+        </footer>
     </body>
     </html>
 
