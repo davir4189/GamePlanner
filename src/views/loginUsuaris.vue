@@ -33,11 +33,13 @@
             loginComponent,
         },
         methods: {
-
+            cookie(){
+                axios.get('http://localhost/api/')
+                .then((e) => {document.cookie = "token='" + e + "';max-age=3600;path=/"})
+            }
         },
         created(){
-            axios.get('http://localhost/api/')
-                .then((e) => {console.log(e)})
+            this.cookie();
         }
     }
 </script>
