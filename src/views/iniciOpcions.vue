@@ -12,7 +12,7 @@
     <body>
         <div class="header">
             <div class="header-1">
-                <img src="../../images/logo.png" width="50" height="50" alt="Logo Game Planner" title="Game Planner"><p class="role">Admin</p>
+                <img src="../../images/logo.png" width="50" height="50" alt="Logo Game Planner" title="Game Planner"><p class="role" >{{ nomPagina }}</p>
             </div>
             <div class="header-2">
                 <RouterLink to="/">
@@ -57,10 +57,37 @@
 import iniciAdmin from '@/components/iniciAdmin.vue';
 // import iniciGestor from '@/components/iniciGestor.vue';
 // import iniciTecnic from '@/components/iniciTecnic.vue';
-
+import axios from 'axios';
 export default{
     name:"iniciOpcions",
-    components:{iniciAdmin, } 
+    components:{iniciAdmin },
+    data(){
+        return{
+         nomPagina:this.$route.name,
+         tipoUsuario:""
+        }
+    },
+    created(){
+        if(sessionStorage.getItem("token") === null){
+            this.$router.push('/login') ;
+        }
+        else{
+            //comprobamos que exista
+            axios.post('http://localhost/api/',{
+                token:sessionStorage.getItem("token")
+            }).then((resultado)=>{
+                if(resultado){
+                 this.tipoUsuario=resultado
+                }
+                else{
+                    this.$router.push('/login') ;
+                }
+            }
+            )
+        }
+        
+    }
+    
 }
 </script>
     

@@ -9,7 +9,7 @@ import usuaris from '../views/usuaris'
 
 const routes = [
   {
-    path: '/',
+    path: '/login',
     name: 'login',
     component:loginUsuaris
   },

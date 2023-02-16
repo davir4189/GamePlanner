@@ -29,7 +29,7 @@ class BdD{
     }
     //Aquesta funcio en mira si el usuari que en han pasat las dades existeix
     public function comprobarExisteix($email,$contrasenya){//buscamos por usuario contraseña si lo encuentra update
-        $SQL = "SELECT * FROM usuari WHERE email = :email and :contrasenya";
+        $SQL = "SELECT * FROM usuari WHERE email = :email and contrasenya = :contrasenya";
         $consulta = (BdD::$connection)->prepare($SQL);
         $consulta->bindParam(':email',$email);
         $consulta->bindParam(':contrasenya',$contrasenya);
@@ -41,6 +41,48 @@ class BdD{
         }
         else
             return false;
+    }
+    public function recuperarRol($email,$contrasenya){
+        $resposta=null;
+        $SQL = "SELECT rol FROM usuari WHERE email = :email and contrasenya = :contrasenya";
+        $consulta = (BdD::$connection)->prepare($SQL);
+        $consulta->bindParam(':email',$email);
+        $consulta->bindParam(':contrasenya',$contrasenya);
+        $qFiles = $consulta->execute(); 
+        if ($consulta->rowCount() > 0){
+                 //asosiamos el resultado en un array para tener acceso a el
+            $consulta->setFetchMode(PDO::FETCH_ASSOC); 
+			$result = $consulta->fetchAll();
+            foreach($result as $fila)
+            {
+				$resposta[] = $fila;
+            }
+            return $resposta[0]['rol'];
+        }
+        else
+            return false;
+    
+    }
+    //busco por el token y retorno su rol
+    public function recuperarRol_token($token){
+        $resposta=null;
+        $SQL = "SELECT rol FROM usuari WHERE token = :token";
+        $consulta = (BdD::$connection)->prepare($SQL);
+        $consulta->bindParam(':token',$token);
+        $qFiles = $consulta->execute(); 
+        if ($consulta->rowCount() > 0){
+                 //asosiamos el resultado en un array para tener acceso a el
+            $consulta->setFetchMode(PDO::FETCH_ASSOC); 
+			$result = $consulta->fetchAll();
+            foreach($result as $fila)
+            {
+				$resposta[] = $fila;
+            }
+            return $resposta[0]['rol'];
+        }
+        else
+            return false;
+    
     }
     
     public function comprobarExisteixPerToken($tokenAntic){//despues del login buscamos por el token
@@ -233,7 +275,7 @@ class BdD{
         $qFiles = $consulta->execute();   
     }
     public function insertarToken_token($token){
-        $SQL='INSERT INTO tokenbd (token) VALUES (:token);';
+        $SQL='INSERT INTO tokenbd (token) VALUES (:token)';
         $consulta = (BdD::$connection)->prepare($SQL);
         $consulta->bindParam(':token',$token);
         $qFiles = $consulta->execute(); 
