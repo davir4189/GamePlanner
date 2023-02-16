@@ -34,8 +34,12 @@
         },
         methods: {
             cookie(){
-                axios.get('http://localhost/api/')
-                .then((e) => {document.cookie = "token='" + e + "';max-age=3600;path=/"})
+                axios.post('http://localhost/api/')
+                .then((e) => {
+                    document.cookie = "token='" + e.data + "';max-age=3600;path=/";
+                    sessionStorage.token=e.data;
+                    
+                })
             }
         },
         created(){

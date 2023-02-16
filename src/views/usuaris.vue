@@ -30,7 +30,11 @@
         </RouterLink>
 
         <div class="container">
-            <usuarisCaixes>
+            
+            <usuarisCaixes 
+                v-for="usuari in dadesUsuaris"
+                :key="usuari.idUsuari"
+                >
                 
             </usuarisCaixes>
         </div>    
@@ -58,10 +62,21 @@
 <script>
 
 import usuarisCaixes from '@/components/usuarisCaixes.vue';
-
+import axios from 'axios';
 export default{
     name:"totsUsuaris",
-    components:{usuarisCaixes}
+    components:{usuarisCaixes},
+    data(){
+        return{
+        dadesUsuaris:{}
+        }
+    },
+    methods:{
+        getDades(){
+            axios.get('http://localhost/api/')
+                .then((usuaris) => this.dadesUsuaris = usuaris.data.list)
+        }
+    }
 }
 
 </script>

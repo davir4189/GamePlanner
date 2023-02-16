@@ -1,7 +1,7 @@
 <template>
     <div class="container-1">
-        <p class="name" id="name">ENDRIT QUKOVCI</p>
-        <p class="role" id="role">Admin</p>
+        <p class="name" id="name">{{ item.nom }}</p>
+        <p class="role" id="role">{{ item.rol }}</p>
         <div class="container-2">
             <div class="div2">
                 <RouterLink to="employees/editEmployee">
@@ -20,7 +20,8 @@
 
 <script>
 export default{
-    name:"usuarisCaixes"
+    name:"usuarisCaixes",
+    props:['item']
 }
 </script>
 
