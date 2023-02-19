@@ -2,6 +2,7 @@
 
     <!DOCTYPE html>
     <html lang="en">
+
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,7 +13,8 @@
     <body>
         <div class="header">
             <div class="header-1">
-                <img src="../../images/logo.png" width="50" height="50" alt="Logo Game Planner" title="Game Planner"><p class="role" >{{ nomPagina }}</p>
+                <img src="../../images/logo.png" width="50" height="50" alt="Logo Game Planner" title="Game Planner">
+                <p class="role">{{ nomPagina }}</p>
             </div>
             <div class="header-2">
                 <RouterLink to="/">
@@ -22,14 +24,14 @@
         </div>
 
         <div>
-            <hr>    
+            <hr>
         </div>
 
         <!-- V-IF segun la usuari que nos llegue -->
         <div class="container">
-            <iniciAdmin></iniciAdmin>
-            <!-- <iniciGestor></iniciGestor>
-            <iniciTecnic></iniciTecnic> -->
+            <iniciAdmin v-if="tipoUsuario == 'admin'"></iniciAdmin>
+            <iniciGestor v-if="tipoUsuario == 'gestor'"></iniciGestor>
+            <iniciTecnic v-if="tipoUsuario == 'tecnic'"></iniciTecnic>
         </div>
 
         <footer>
@@ -45,49 +47,76 @@
                     <button class="ft3">Legal warning</button>
                     <button class="ft3">Cookies policy</button>
                 </div>
-            </div>    
+            </div>
         </footer>
 
     </body>
+
     </html>
 
 </template>
 
 <script>
 import iniciAdmin from '@/components/iniciAdmin.vue';
-// import iniciGestor from '@/components/iniciGestor.vue';
-// import iniciTecnic from '@/components/iniciTecnic.vue';
+import iniciGestor from '@/components/iniciGestor.vue';
+import iniciTecnic from '@/components/iniciTecnic.vue';
 import axios from 'axios';
-export default{
-    name:"iniciOpcions",
-    components:{iniciAdmin },
-    data(){
-        return{
-         nomPagina:this.$route.name,
-         tipoUsuario:""
+export default {
+    name: "iniciOpcions",
+    components: { iniciAdmin, iniciGestor, iniciTecnic },
+    data() {
+        return {
+            nomPagina: this.$route.name,
+            tipoUsuario: ""
         }
     },
-    created(){
-        if(sessionStorage.getItem("token") === null){
-            this.$router.push('/login') ;
-        }
-        else{
-            //comprobamos que exista
-            axios.post('http://localhost/api/',{
-                token:sessionStorage.getItem("token")
-            }).then((resultado)=>{
-                if(resultado){
-                 this.tipoUsuario=resultado
-                }
-                else{
-                    this.$router.push('/login') ;
-                }
+
+    methods: {
+        revisionPermisos() {
+            if (sessionStorage.getItem("token") === null) {
+                this.$router.push('/login');
+
             }
-            )
+            else {
+                //comprobamos que exista
+                axios.post('http://localhost/api/', {
+                    token: sessionStorage.getItem("token"),
+                    direccion: this.$route.name
+                }).then((resultado) => {
+
+                    if (resultado.data) {
+                        console.log(resultado.data)
+                        this.tipoUsuario = resultado.data.rol;
+
+                        sessionStorage.tipoUsuario = resultado.data.rol;
+
+
+                        if (resultado.data.rol == 'admin') {
+                            this.$router.push('/admin');
+                        }
+                        else if (resultado.data.rol == 'gestor') {
+                            this.$router.push('/manager');
+                        }
+                        else if (resultado.data.rol == 'tecnic') {
+                            this.$router.push('/technical');
+                        }
+
+
+                    }
+                    else {
+                        this.$router.push('/login');
+                    }
+                }
+                )
+            }
         }
-        
+    },
+    created() {
+        this.revisionPermisos()
+
     }
-    
+
+
 }
 </script>
     
