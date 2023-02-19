@@ -29,8 +29,7 @@
             </div>
         </RouterLink>
 
-        <div class="container">
-            
+        <div class="container"> 
             <usuarisCaixes 
                 v-for="usuari in dadesUsuaris"
                 :key="usuari.idUsuari"

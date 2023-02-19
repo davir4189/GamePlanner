@@ -30,7 +30,6 @@ class server
             if ($bdd->existeixToken_bbd_usuari($token) || $bdd->existeixToken_bbd_token($token))
                 if ($recurso == 'login') {
                     
-
                     if ($bdd->existeixToken_bbd_token($token)) {
                         //Acaba de iniciar, comprobamos que existe en la bdd token
                         $email = $data->email;
@@ -49,15 +48,12 @@ class server
                         }
                     }
 
-
                 }
                 elseif ($recurso=='admin'||$recurso=='manager'||$recurso=='technical'){
                     $rol=  $bdd->recuperarRol_token($token);
                     $datosApasar= array('rol'=>$rol);                
                     echo json_encode($datosApasar);
-
-                }
-                              
+                }                              
                 else {
                     //si la cookie que nos pasa no existe
                     header('HTTP/1.1 401 Unauthorized');
@@ -75,9 +71,8 @@ class server
             $bdd->insertarToken_token($value); 
 			echo $value;//envia 
         }
-
-
     }
+    
         public function tokenAleatorio()
         {
             $caracteres_permitidos = '0kjkjlj123456789abcdefghijklmno897897pqrstuvwxyzABCDEFGHI6546JKLMNOPQRSTUVWXYZ';

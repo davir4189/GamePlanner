@@ -6,8 +6,14 @@ import iniciOpcions from '../views/iniciOpcions'
 import misTrabajos from '../views/misTrabajos'
 import tasques from '../views/tasques'
 import usuaris from '../views/usuaris'
+import redireccion from '../components/redireccion'
 
 const routes = [
+  {
+    path: '/',
+    name: '',
+    component:redireccion
+  },
   {
     path: '/login',
     name: 'login',

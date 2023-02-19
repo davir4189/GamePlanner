@@ -1,9 +1,8 @@
 <template>
     <input type="text" class="email" name="email" id="email" title="Email" placeholder="Email" v-model="email">
     <input type="password" class="password" name="password" id="password" title="Password" placeholder="Password" v-model="contrasenya">
-    <!-- <RouterLink to="/admin"> -->
-        <button class="button-login" id="buttonLogin" name="buttonLogin" @click="login">Log In</button>
-    <!-- </RouterLink> -->
+    <button class="button-login" id="buttonLogin" name="buttonLogin" @click="login">Log In</button>
+    <div class="msgError">wrong username or password</div>
 </template>
 
 <script>
