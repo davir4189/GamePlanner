@@ -16,7 +16,7 @@
                 </div>
                 <div class="div2-2">
                     <RouterLink to="/works">
-                        <button class="button" id="delete" @click="">DELETE</button>
+                        <button class="button" id="delete">DELETE</button>
                     </RouterLink>
                 </div>
             </div>
