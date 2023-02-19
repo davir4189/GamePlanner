@@ -2,7 +2,7 @@
     <input type="text" class="email" name="email" id="email" title="Email" placeholder="Email" v-model="email">
     <input type="password" class="password" name="password" id="password" title="Password" placeholder="Password" v-model="contrasenya">
     <button class="button-login" id="buttonLogin" name="buttonLogin" @click="login">Log In</button>
-    <div class="msgError">wrong username or password</div>
+    <div class="msgError" id="msgError">wrong username or password</div>
 </template>
 
 <script>
@@ -46,6 +46,8 @@ export default {
             .catch((error) => {
                 if(error.response.status === 404)
                 {
+                    const msgError = document.getElementById("msgError");
+                    msgError.style.display = "block";
                     this.email="";
                     this.contrasenya="";
                 }
