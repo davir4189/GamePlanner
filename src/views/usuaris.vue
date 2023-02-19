@@ -29,8 +29,7 @@
             </div>
         </RouterLink>
 
-        <div class="container">
-            
+        <div class="container"> 
             <usuarisCaixes 
                 v-for="usuari in dadesUsuaris"
                 :key="usuari.idUsuari"
@@ -45,6 +44,10 @@
                     <img src="../../images/facebook.png" alt="" width="30" height="30" class="imgFooter">
                     <img src="../../images/instagram.png" alt="" width="30" height="30" class="imgFooter">
                     <img src="../../images/twitter.png" alt="" width="30" height="30" class="imgFooter">
+                </div>
+
+                <div class="ft4">
+                    Game Planner © Authors: Endrit Qukovci and Davi Rodrigues
                 </div>
 
                 <div class="ft2">

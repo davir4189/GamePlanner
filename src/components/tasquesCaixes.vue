@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="container4" id="map">
-            
+
         </div>
     </div>
 </template>
@@ -54,8 +54,10 @@
         mounted(){
             this.mirarEstado();
         }
+
     }
 </script>
+
 
 <style src="../../styles/works.css" scoped>
 
