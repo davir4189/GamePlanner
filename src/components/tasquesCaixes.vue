@@ -1,13 +1,13 @@
 <template>
-    <div class="container2">
+    <div class="container2" :id="item.idTasca">
         <div class="container3">
-            <p class="name" id="name">FC BARCELONA - REAL MADRID</p>
-            <p class="description" id="description">Partido que jugaran el Futbol Club Barcelona contra el Real Madrid en el Spotify Camp Nou</p>
-            <p class="datos">DATOS</p>
-            <p><input type="date" class="fehca" name="" id="" disabled></p>
-            <p class="trabajador">Trabajador: Endrit Qukovci</p>
-            <p class="trabajador">Prioridad: 9</p>
-            <p class="trabajador">Estado: Pendiente</p>
+            <p class="name" id="name">{{ item.nom }}</p>
+            <p class="description" id="description">{{ item.descripicio }}</p>
+            <p class="datos">INFORMATION</p>
+            <p class="trabajador">Date: {{ item.dataTasca }}</p>
+            <p class="trabajador">Employee: {{ item.empleat }}</p>
+            <p class="trabajador">Priority: {{ item.prioritat }} </p>
+            <p class="trabajador ">Status: {{ item.estat }}</p>
             <div class="container5">
                 <div class="div2">
                     <RouterLink to="/works/editWork">
@@ -29,8 +29,32 @@
 
 <script>
 
+
     export default{
         name:"tasquesCaixes",
+        props:['item'],
+        methods:{
+            mirarEstado(){
+                if(this.item.estat==="proces"){
+                    console.log("entra")
+                    var divEdit = document.getElementById(this.item.idTasca);
+                    divEdit.style.border = "3px solid red";
+                }
+                if(this.item.estat==="final"){
+                    var divEdit2 = document.getElementById(this.item.idTasca);
+                    divEdit2.tabIndex = -1;
+                    divEdit2.style.opacity = "70%";
+                    divEdit2.style.pointerEvents = "none";
+                }
+            },
+            // rellenarData(){
+                
+            // }
+        },
+        mounted(){
+            this.mirarEstado();
+        }
+
     }
 </script>
 
