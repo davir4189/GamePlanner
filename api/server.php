@@ -8,7 +8,6 @@ class server
     {
         $uri = $_SERVER['REQUEST_URI']; //guardamos el url que nos envia
         $method = $_SERVER['REQUEST_METHOD']; //si es un get, pull,
-        $paths = explode('/', $uri);
         
         //array_shift($paths);
 
@@ -26,11 +25,11 @@ class server
         if ($token!=null) 
 		{
             $recurso=$data->direccion;
-            
             //comprobamos que el token existe
             if ($bdd->existeixToken_bbd_usuari($token) || $bdd->existeixToken_bbd_token($token))
                 if ($recurso == 'login') {
                     
+
                     if ($bdd->existeixToken_bbd_token($token)) {
                         //Acaba de iniciar, comprobamos que existe en la bdd token
                         $email = $data->email;
@@ -49,13 +48,35 @@ class server
                         }
                     }
 
+
                 }
                 elseif ($recurso=='admin'||$recurso=='manager'||$recurso=='technical'){
                     $rol=  $bdd->recuperarRol_token($token);
                     
                     $datosApasar= array('rol'=>$rol);                
                     echo json_encode($datosApasar);
-                }                              
+
+                }
+                elseif($recurso=='works'){
+                    $rol=  $bdd->recuperarRol_token($token);
+                    
+                    if($rol=='admin'||$rol=='gestor'){
+                       
+                        
+                        $tasques=$bdd->veureTasques();                  
+                        $datosApasar= array('rol'=>$rol,'tasques'=>$tasques);  
+                        echo json_encode($datosApasar);
+                    }
+                    else{
+                        
+                        $rol=false;
+                        $datosApasar= array('rol'=>$rol); 
+                        echo json_encode($datosApasar);
+                    }
+                   
+
+                }
+                              
                 else {
                     //si la cookie que nos pasa no existe
                     header('HTTP/1.1 401 Unauthorized');
@@ -73,8 +94,9 @@ class server
             $bdd->insertarToken_token($value); 
 			echo $value;//envia 
         }
+
+
     }
-    
         public function tokenAleatorio()
         {
             $caracteres_permitidos = '0kjkjlj123456789abcdefghijklmno897897pqrstuvwxyzABCDEFGHI6546JKLMNOPQRSTUVWXYZ';

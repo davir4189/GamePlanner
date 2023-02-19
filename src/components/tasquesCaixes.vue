@@ -16,7 +16,7 @@
                 </div>
                 <div class="div2-2">
                     <RouterLink to="/works">
-                        <button class="button" id="delete">DELETE</button>
+                        <button class="button" id="delete" @click="">DELETE</button>
                     </RouterLink>
                 </div>
             </div>
@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 
 
     export default{
@@ -47,9 +49,11 @@
                     divEdit2.style.pointerEvents = "none";
                 }
             },
-            // rellenarData(){
-                
-            // }
+            borrar(){
+                axios.get('http://localhost/api/',{
+                    
+                })
+            }
         },
         mounted(){
             this.mirarEstado();
