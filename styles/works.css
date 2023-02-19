@@ -177,12 +177,18 @@ body{
 }
 
 .ft1{
-    width: 50%;
+    width: 33.33%;
     text-align: left;
 }
 
+.ft4{
+    width: 33.33%;
+    text-align: center;
+    font-size: 0.8em;
+}
+
 .ft2{
-    width: 50%;
+    width: 33.33%;
     text-align: right;
 }
 
@@ -212,6 +218,27 @@ body{
 
     .container5{
         flex-direction: column;
+    }
+
+    .footer{
+        flex-direction: column;
+    }
+
+    .ft1{
+        width: 100%;
+        text-align: center;
+    }
+
+    .ft4{
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .ft2{
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
     }
 }
 

@@ -42,12 +42,16 @@
                     <img src="../../images/twitter.png" alt="" width="30" height="30" class="imgFooter">
                 </div>
 
+                <div class="ft4">
+                    Game Planner © Authors: Endrit Qukovci and Davi Rodrigues
+                </div>
+
                 <div class="ft2">
                     <button class="ft3">Privacy policy</button>
                     <button class="ft3">Legal warning</button>
                     <button class="ft3">Cookies policy</button>
                 </div>
-            </div>
+            </div>    
         </footer>
 
     </body>
