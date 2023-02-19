@@ -171,7 +171,7 @@ class BdD{
             {
 				$resposta[] = $fila;
             }
-            echo json_encode($resposta);//retornamos los datos
+           return $resposta;
         }
         else {
             return false;
