@@ -8,7 +8,6 @@ class server
     {
         $uri = $_SERVER['REQUEST_URI']; //guardamos el url que nos envia
         $method = $_SERVER['REQUEST_METHOD']; //si es un get, pull,
-        $paths = explode('/', $uri);
         
         //array_shift($paths);
 
@@ -26,7 +25,6 @@ class server
         if ($token!=null) 
 		{
             $recurso=$data->direccion;
-            
             //comprobamos que el token existe
             if ($bdd->existeixToken_bbd_usuari($token) || $bdd->existeixToken_bbd_token($token))
                 if ($recurso == 'login') {
@@ -57,6 +55,25 @@ class server
                     
                     $datosApasar= array('rol'=>$rol);                
                     echo json_encode($datosApasar);
+
+                }
+                elseif($recurso=='works'){
+                    $rol=  $bdd->recuperarRol_token($token);
+                    
+                    if($rol=='admin'||$rol=='gestor'){
+                       
+                        
+                        $tasques=$bdd->veureTasques();                  
+                        $datosApasar= array('rol'=>$rol,'tasques'=>$tasques);  
+                        echo json_encode($datosApasar);
+                    }
+                    else{
+                        
+                        $rol=false;
+                        $datosApasar= array('rol'=>$rol); 
+                        echo json_encode($datosApasar);
+                    }
+                   
 
                 }
                               
