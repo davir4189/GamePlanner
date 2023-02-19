@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="container4" id="map">
-            
+
         </div>
     </div>
 </template>
@@ -30,9 +30,10 @@
 <script>
 
     export default{
-        name:"tasquesCaixes"
+        name:"tasquesCaixes",
     }
 </script>
+
 
 <style src="../../styles/works.css" scoped>
 

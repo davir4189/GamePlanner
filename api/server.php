@@ -26,6 +26,7 @@ class server
         if ($token!=null) 
 		{
             $recurso=$data->direccion;
+            
             //comprobamos que el token existe
             if ($bdd->existeixToken_bbd_usuari($token) || $bdd->existeixToken_bbd_token($token))
                 if ($recurso == 'login') {
@@ -51,6 +52,7 @@ class server
                 }
                 elseif ($recurso=='admin'||$recurso=='manager'||$recurso=='technical'){
                     $rol=  $bdd->recuperarRol_token($token);
+                    
                     $datosApasar= array('rol'=>$rol);                
                     echo json_encode($datosApasar);
                 }                              
