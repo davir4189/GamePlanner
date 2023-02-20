@@ -170,13 +170,25 @@ body{
 }
 
 .blink {
-    animation: blinker 2s linear infinite;
+    animation: blinker 3s linear infinite;
   }
   
   @keyframes blinker {
     50% {
       background-color: rgb(255, 0, 0);
     }
+  }
+
+  .msgError{
+    margin-top: 20px;
+    display: none;
+    color: black;
+    font-weight: bold;
+  }
+
+  .imgLive{
+    display: none;
+    text-align: center;
   }
 
 /* FOOTER */
