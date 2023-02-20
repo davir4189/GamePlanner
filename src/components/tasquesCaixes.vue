@@ -46,10 +46,6 @@
                     divEdit2.style.pointerEvents = "none";
                 }
             },
-
-            borrarBoton(){
-               //Aqui hay una redirccion pasando el item
-            }
         },
         mounted(){
             this.mirarEstado();
