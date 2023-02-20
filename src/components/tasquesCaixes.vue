@@ -14,59 +14,75 @@
                 <div class="div2">
                     <RouterLink to="/works/editWork">
                         <!-- hay que poner en onclick y te redireccion con la funcion -->
-                        <button class="button" id="edit">EDIT</button>
+                        <button class="button" :id="'edit-' + item.idTasca">EDIT</button>
                     </RouterLink>
                 </div>
                 <div class="div2-2" @click="borrar">
                     <!-- <RouterLink to="/works"> -->
-                        <button class="button" id="delete"  >DELETE</button>
+                        <button class="button" :id="'delete-' + item.idTasca">DELETE</button>
                     <!-- </RouterLink> -->
                 </div>
+                <img src="../../images/live.png" alt="" width="90" height="90" class="imgLive" :id="'imgLive-' + item.idTasca">
+                <p class="msgError" :id="'msgError-' + item.idTasca">WORK IN PROGRESS</p>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import axios from 'axios';
+    import axios from 'axios';
 
+    export default{
+        name:"tasquesCaixes",
+        props:['item'],
+        methods:{
+            //funcion para mirar el estado de la tarea
+            mirarEstado(){
+                //si proceso estilos diferentes
+                if(this.item.estat==="proces"){
+                    var divEdit = document.getElementById(this.item.idTasca);
+                    divEdit.classList.add("blink");
 
-export default {
-    name: "tasquesCaixes",
-    props: ['item'],
-    methods: {
-        mirarEstado() {
-            if (this.item.estat === "proces") {
-                var divEdit = document.getElementById(this.item.idTasca);
-                divEdit.classList.add("blink");
-            }
+                    var editButton = document.querySelector('#edit-' + this.item.idTasca);
+                    var deleteButton = document.querySelector('#delete-' + this.item.idTasca);
+                    var msgError = document.querySelector('#msgError-' + this.item.idTasca);
+                    var imgLive = document.querySelector('#imgLive-' + this.item.idTasca);
+                    editButton.disabled = true;
+                    deleteButton.disabled = true;
+                    editButton.style.display = "none";
+                    deleteButton.style.display = "none";
+                    msgError.style.display = "block";
+                    imgLive.style.display = "block";
+                }
+                //si final estilo diferente
+                if(this.item.estat==="final"){
+                    var divEdit2 = document.getElementById(this.item.idTasca);
+                    divEdit2.tabIndex = -1;
+                    divEdit2.style.opacity = "70%";
+                    divEdit2.style.pointerEvents = "none";
+                }
+            },
 
-            if (this.item.estat === "final") {
-                var divEdit2 = document.getElementById(this.item.idTasca);
-                divEdit2.tabIndex = -1;
-                divEdit2.style.opacity = "70%";
-                divEdit2.style.pointerEvents = "none";
-            }
-        },
-        borrar() {
+            //funcion para borrar tarea
+            borrar() {
             axios.delete('http://localhost/api/', {
                 data: { direccion: this.$route.name,token: sessionStorage.getItem("token"),idTasca: this.item.idTasca  },
-                   
+
             }).then((resposta) => {
+                //cuando tarea borrada recargo pagina
                 console.log(resposta)
                 window.location.reload();
-               
             })
         }
-    },
-
-    mounted() {
-        console.log(this.item.idTasca)
-        console.log(sessionStorage.getItem("token"))
-        this.mirarEstado();
+        },
+        mounted(){
+            this.mirarEstado();
+        }
     }
-}
 </script>
 
 
-<style src="../../styles/works.css" scoped></style>
+<style src="../../styles/works.css" scoped>
+
+
+</style>
