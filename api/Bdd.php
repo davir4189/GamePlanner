@@ -50,7 +50,7 @@ class BdD{
         $consulta->bindParam(':contrasenya',$contrasenya);
         $qFiles = $consulta->execute(); 
         if ($consulta->rowCount() > 0){
-                 //asosiamos el resultado en un array para tener acceso a el
+                 //asociamos el resultado en un array para tener acceso a el
             $consulta->setFetchMode(PDO::FETCH_ASSOC); 
 			$result = $consulta->fetchAll();
             foreach($result as $fila)

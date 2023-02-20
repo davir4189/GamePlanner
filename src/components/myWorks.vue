@@ -3,6 +3,8 @@
             <div class="caja1">
                 <div class="name" id="name" name="name">Barcelona - Real Madrid</div>
                 <div class="description" id="description" name="description">Partido del Futbol Club Barcelona contra el Real Madrid en el Spotify Camp Nou</div>
+            </div>
+            <div class="caja2">
                 <div class="container">
                     <select class="status" name="status" id="status">
                         <option disabled selected>Status</option>
@@ -16,9 +18,6 @@
                     <input type="text" class="comment" name="comments" id="comments" placeholder="comments...">
                     <button class="buttonTasca" id="commentButton" name="commentButton">SAVE</button>
                 </div>
-            </div>
-            <div class="caja2">
-                <!-- AQUI TIENE QUE IR API GOOGLE MAPS -->
             </div>
         </div>
 </template>

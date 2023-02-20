@@ -7,7 +7,7 @@
             <p class="trabajador">Date: {{ item.dataTasca }}</p>
             <p class="trabajador">Employee: {{ item.empleat }}</p>
             <p class="trabajador">Priority: {{ item.prioritat }} </p>
-            <p class="trabajador ">Status: {{ item.estat }}</p>
+            <p class="trabajador2 ">Status: {{ item.estat }}</p>
         </div>
         <div class="container4" id="map">
             <div class="container5">
