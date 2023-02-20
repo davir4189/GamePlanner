@@ -30,14 +30,15 @@
 </template>
 
 <script>
-
     import axios from 'axios';
 
     export default{
         name:"tasquesCaixes",
         props:['item'],
         methods:{
+            //funcion para mirar el estado de la tarea
             mirarEstado(){
+                //si proceso estilos diferentes
                 if(this.item.estat==="proces"){
                     var divEdit = document.getElementById(this.item.idTasca);
                     divEdit.classList.add("blink");
@@ -53,7 +54,7 @@
                     msgError.style.display = "block";
                     imgLive.style.display = "block";
                 }
-
+                //si final estilo diferente
                 if(this.item.estat==="final"){
                     var divEdit2 = document.getElementById(this.item.idTasca);
                     divEdit2.tabIndex = -1;
@@ -62,18 +63,17 @@
                 }
             },
 
-
+            //funcion para borrar tarea
             borrar() {
             axios.delete('http://localhost/api/', {
                 data: { direccion: this.$route.name,token: sessionStorage.getItem("token"),idTasca: this.item.idTasca  },
 
             }).then((resposta) => {
+                //cuando tarea borrada recargo pagina
                 console.log(resposta)
                 window.location.reload();
-
             })
         }
-
         },
         mounted(){
             this.mirarEstado();

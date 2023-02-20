@@ -32,7 +32,7 @@
         </RouterLink>
 
         <div class="container">
-            <usuarisCaixes v-for="item in componentes" :key="item.idUsuari" :item="item">
+            <usuarisCaixes v-for="usuari in dadesUsuaris" :key="usuari.idUsuari">
 
             </usuarisCaixes>
         </div>
@@ -75,11 +75,11 @@ export default {
     },
     methods: {
         getDades() {
-            axios.post('http://localhost/api/', {
+            axios.get('http://localhost/api/', {
                 direccion: this.$route.name,
                 token: sessionStorage.getItem("token"),
             }).then((usuaris) => {
-                console.log(usuaris)
+                console.log(usuaris.data)
                 if (usuaris.data.rol) {
 
                     //ordenar por rol
@@ -87,19 +87,19 @@ export default {
 
                     for (var i = 0; i < usuaris.data.usuaris.length; i++) {
                         if (usuaris.data.usuaris[i].rol == "admin") {
-                            ordenado.push(usuaris.data.usuaris[i])
+                            ordenado.push(usuaris.data.tasques[i])
                         }
                     }
 
                     for (let i = 0; i < usuaris.data.usuaris.length; i++) {
-                        if (usuaris.data.usuaris[i].rol == "gestor") {
-                            ordenado.push(usuaris.data.usuaris[i])
+                        if (usuaris.data.usuaris[i].rol == "pendent") {
+                            ordenado.push(usuaris.data.tasques[i])
                         }
                     }
 
                     for (let i = 0; i < usuaris.data.usuaris.length; i++) {
-                        if (usuaris.data.usuaris[i].rol == "tecnic") {
-                            ordenado.push(usuaris.data.usuaris[i])
+                        if (usuaris.data.usuaris[i].rol == "final") {
+                            ordenado.push(usuaris.data.tasques[i])
                         }
                     }
 
@@ -111,7 +111,6 @@ export default {
     },
     created() {
         this.getDades();
-        console.log(this.$route.name);
     }
 }
 
