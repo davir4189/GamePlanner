@@ -64,7 +64,6 @@ body{
     align-items: center;
     flex-direction: row;
     margin-top: 30px;
-    /* opacity: 60%; */
 }
 
 .div2{
@@ -97,6 +96,7 @@ body{
     align-items: center;
     flex-direction: column;
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .name{
@@ -161,6 +161,17 @@ body{
     border: 1px solid rgb(0, 88, 0);
     transition: 0.3s;
 }
+
+.blink {
+    animation: blinker 0.5s linear infinite;
+    outline: 5px solid red; /* cambia border por outline */
+  }
+  
+  @keyframes blinker {
+    50% {
+      outline-color: red; /* cambia border-color por outline-color */
+    }
+  }
 
 /* FOOTER */
 
