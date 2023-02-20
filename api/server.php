@@ -8,7 +8,7 @@ class server
     {
         $uri = $_SERVER['REQUEST_URI']; //guardamos el url que nos envia
         $method = $_SERVER['REQUEST_METHOD']; //si es un get, pull,
-        
+       
         //array_shift($paths);
 
         // var_dump($recurso);
@@ -58,27 +58,31 @@ class server
 
                 }
                 //nos llega aqui cuando hacemos la coneccion a la api algun de estos url
-                elseif($recurso=='works' ||$recurso=="/works/editWork" ){
+                elseif($recurso=='works' ){
                     $rol=  $bdd->recuperarRol_token($token);
                     
                     if($rol=='admin'||$rol=='gestor'){
                        
-                        if($method=='GET'){
-                        $tasques=$bdd->veureTasques();                  
-                        $datosApasar= array('rol'=>$rol,'tasques'=>$tasques);  
-                        echo json_encode($datosApasar);
+                        if($method=='POST'){
+                            $tasques=$bdd->veureTasques();                  
+                            $datosApasar= array('rol'=>$rol,'tasques'=>$tasques);  
+                            echo json_encode($datosApasar);
                         }
                         //cuando la coneccion a axios es delete
                         elseif($method=="DELETE"){
                             //me devuelve true or false, por si existe la tasca
-                            $idTasca=$bdd->veureUnaTasca($data->idTasca);
+                             $idTasca1= $data->idTasca;
+                            $idTasca=$bdd->veureUnaTasca($idTasca1);
                             if($idTasca){
                                 $idTasca=$data->idTasca;
                                 $bdd->borrarTasca($idTasca);
-                                echo (true);
+                                
+                            }
+                            else{
+                                echo json_encode("entra2");
                             }
                         }
-                    }
+                   }
                     else{
                         
                         $rol=false;
@@ -86,6 +90,17 @@ class server
                         echo json_encode($datosApasar);
                     }
                    
+
+                }
+                elseif ($recurso == 'employees'){
+                    
+                    $rol = $bdd->recuperarRol_token($token);
+
+                    if($rol == 'admin'){
+                        $usuaris = $bdd->veureUsers();
+                        $datosApasar = array('rol' => $rol, 'usuaris' => $usuaris);
+                        echo json_encode($datosApasar);
+                    }
 
                 }
                               
@@ -104,7 +119,8 @@ class server
             }
             
             $bdd->insertarToken_token($value); 
-			echo $value;//envia 
+			$datosApasar=array('value'=>$value,'token'=>$token,'dataPasar'=> $data);
+            echo $value;
         }
 
 
@@ -119,5 +135,3 @@ class server
 
 $server=new server();
 $server->serve();
-
-?>

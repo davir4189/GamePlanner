@@ -14,35 +14,44 @@
                 <div class="div2">
                     <RouterLink to="/works/editWork">
                         <!-- hay que poner en onclick y te redireccion con la funcion -->
-                        <button class="button" id="edit">EDIT</button>
+                        <button class="button" :id="'edit-' + item.idTasca">EDIT</button>
                     </RouterLink>
                 </div>
-                <div class="div2-2">
-                    <RouterLink to="/works">
-                        <button class="button" id="delete">DELETE</button>
-                    </RouterLink>
+                <div class="div2-2" @click="borrar">
+                    <!-- <RouterLink to="/works"> -->
+                        <button class="button" :id="'delete-' + item.idTasca">DELETE</button>
+                    <!-- </RouterLink> -->
                 </div>
+                <img src="../../images/live.png" alt="" width="90" height="90" class="imgLive" :id="'imgLive-' + item.idTasca">
+                <p class="msgError" :id="'msgError-' + item.idTasca">WORK IN PROGRESS</p>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-    // import axios from 'axios';
-    // import googleMaps from './googleMaps.vue';
+    import axios from 'axios';
 
     export default{
         name:"tasquesCaixes",
         props:['item'],
-        // components: {
-        //     googleMaps
-        // },
         methods:{
             mirarEstado(){
 
                 if(this.item.estat==="proces"){
                     var divEdit = document.getElementById(this.item.idTasca);
                     divEdit.classList.add("blink");
+
+                    var editButton = document.querySelector('#edit-' + this.item.idTasca);
+                    var deleteButton = document.querySelector('#delete-' + this.item.idTasca);
+                    var msgError = document.querySelector('#msgError-' + this.item.idTasca);
+                    var imgLive = document.querySelector('#imgLive-' + this.item.idTasca);
+                    editButton.disabled = true;
+                    deleteButton.disabled = true;
+                    editButton.style.display = "none";
+                    deleteButton.style.display = "none";
+                    msgError.style.display = "block";
+                    imgLive.style.display = "block";
                 }
 
                 if(this.item.estat==="final"){
@@ -53,9 +62,16 @@
                 }
             },
 
-            borrarBoton(){
-               //Aqui hay una redirccion pasando el item
-            }
+            borrar() {
+            axios.delete('http://localhost/api/', {
+                data: { direccion: this.$route.name,token: sessionStorage.getItem("token"),idTasca: this.item.idTasca  },
+
+            }).then((resposta) => {
+                console.log(resposta)
+                window.location.reload();
+
+            })
+        }
         },
         mounted(){
             this.mirarEstado();
