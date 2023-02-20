@@ -57,15 +57,27 @@ class server
                     echo json_encode($datosApasar);
 
                 }
-                elseif($recurso=='works'){
+                //nos llega aqui cuando hacemos la coneccion a la api algun de estos url
+                elseif($recurso=='works' ||$recurso=="/works/editWork" ){
                     $rol=  $bdd->recuperarRol_token($token);
                     
                     if($rol=='admin'||$rol=='gestor'){
                        
-                        
+                        if($method=='GET'){
                         $tasques=$bdd->veureTasques();                  
                         $datosApasar= array('rol'=>$rol,'tasques'=>$tasques);  
                         echo json_encode($datosApasar);
+                        }
+                        //cuando la coneccion a axios es delete
+                        elseif($method=="DELETE"){
+                            //me devuelve true or false, por si existe la tasca
+                            $idTasca=$bdd->veureUnaTasca($data->idTasca);
+                            if($idTasca){
+                                $idTasca=$data->idTasca;
+                                $bdd->borrarTasca($idTasca);
+                                echo (true);
+                            }
+                        }
                     }
                     else{
                         
