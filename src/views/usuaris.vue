@@ -1,16 +1,18 @@
-<template>
-    <!DOCTYPE html>
+<template><!DOCTYPE html>
     <html lang="en">
+
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Employees</title>
     </head>
+
     <body>
         <div class="header">
             <div class="header-1">
-                <img src="../../images/logo.png" width="50" height="50" alt="Logo Game Planner" title="Game Planner"><p class="role2">Employees</p>
+                <img src="../../images/logo.png" width="50" height="50" alt="Logo Game Planner" title="Game Planner">
+                <p class="role2">Employees</p>
             </div>
             <div class="header-2">
                 <RouterLink to="/admin">
@@ -29,14 +31,11 @@
             </div>
         </RouterLink>
 
-        <div class="container"> 
-            <usuarisCaixes 
-                v-for="usuari in dadesUsuaris"
-                :key="usuari.idUsuari"
-                >
-                
+        <div class="container">
+            <usuarisCaixes v-for="usuari in dadesUsuaris" :key="usuari.idUsuari">
+
             </usuarisCaixes>
-        </div>    
+        </div>
 
         <footer>
             <div class="footer">
@@ -55,35 +54,66 @@
                     <button class="ft3">Legal warning</button>
                     <button class="ft3">Cookies policy</button>
                 </div>
-            </div>    
+            </div>
         </footer>
     </body>
-    </html>
 
+    </html>
 </template>
 
 <script>
-
 import usuarisCaixes from '@/components/usuarisCaixes.vue';
 import axios from 'axios';
-export default{
-    name:"totsUsuaris",
-    components:{usuarisCaixes},
-    data(){
-        return{
-        dadesUsuaris:{}
+
+export default {
+    name: "totsUsuaris",
+    components: { usuarisCaixes },
+    data() {
+        return {
+            componentes: '',
         }
     },
-    methods:{
-        getDades(){
-            axios.get('http://localhost/api/')
-                .then((usuaris) => this.dadesUsuaris = usuaris.data.list)
+    methods: {
+        getDades() {
+            axios.get('http://localhost/api/', {
+                direccion: this.$route.name,
+                token: sessionStorage.getItem("token"),
+            }).then((usuaris) => {
+                console.log(usuaris.data)
+                if (usuaris.data.rol) {
+
+                    //ordenar por rol
+                    var ordenado = [];
+
+                    for (var i = 0; i < usuaris.data.usuaris.length; i++) {
+                        if (usuaris.data.usuaris[i].rol == "admin") {
+                            ordenado.push(usuaris.data.tasques[i])
+                        }
+                    }
+
+                    for (let i = 0; i < usuaris.data.usuaris.length; i++) {
+                        if (usuaris.data.usuaris[i].rol == "pendent") {
+                            ordenado.push(usuaris.data.tasques[i])
+                        }
+                    }
+
+                    for (let i = 0; i < usuaris.data.usuaris.length; i++) {
+                        if (usuaris.data.usuaris[i].rol == "final") {
+                            ordenado.push(usuaris.data.tasques[i])
+                        }
+                    }
+
+                    console.log(ordenado)
+                    this.componentes = ordenado;
+                }
+            }) //this.dadesUsuaris = usuaris.data.list)
         }
+    },
+    created() {
+        this.getDades();
     }
 }
 
 </script>
 
-<style src="../../styles/employees.css" scoped>
-
-</style>
+<style src="../../styles/employees.css" scoped></style>
