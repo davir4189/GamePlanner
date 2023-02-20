@@ -21,7 +21,7 @@ class server
         $token= $data->token;
         }
         //si no tiene cookie no entramos
-       
+
         if ($token!=null) 
 		{
             $recurso=$data->direccion;
@@ -91,6 +91,90 @@ class server
                    
 
                 }
+
+
+                elseif($recurso == 'addWork'){
+                    $nom = "";
+                    $fecha = "";
+                    $equipLocal = "";
+                    $equipVisitant = "";
+                    $prioritat = "";
+                    $empleat = "";
+                    $descripcio = "";
+                    $tasca = "";
+
+
+                    $rol=  $bdd->recuperarRol_token($token);
+                    if($rol == 'admin' || $rol == 'gestor'){
+                        
+                        $nom = $data->$nom;
+                        $fecha = $data->$fecha;
+                        $equipLocal = $data->$equipLocal;
+                        $equipVisitant = $data->$equipVisitant;
+                        $prioritat = $data->$prioritat;
+                        $empleat = $data->$empleat;
+                        $descripcio = $data->$descripcio;
+                        echo "hoooola";
+                        if($method == 'POST'){
+                            echo "adei";
+                            $tasca = $bdd->crearTasca($nom, $descripcio, $prioritat, "pedent", null, null, $empleat, $equipLocal, $equipVisitant, null);
+                        }
+                    }
+                }
+
+                elseif ($recurso == 'employees'){
+                    
+                    $rol = $bdd->recuperarRol_token($token);
+
+                    if($rol == 'admin'){
+                        $usuaris = $bdd->veureUsers();
+                        $datosApasar = array('rol' => $rol, 'usuaris' => $usuaris);
+                        echo json_encode($datosApasar);
+                    }
+
+                }
+
+                elseif ($recurso == 'myWorks'){
+
+                    $rol = $bdd->recuperarRol_token($token);
+                    $idUsuari = null;
+
+                    if($method == 'POST'){
+                        
+                        $idUsuari = $bdd->recuperarIdUsuari_token($token);
+
+                        if($rol == 'gestor' || $rol == 'tecnic' || $idUsuari != false){
+                            $tasques = $bdd->veureTasquesUsuari($idUsuari);
+                            $datosApasar = array('rol' => $rol, 'tasques' => $tasques);
+                            echo json_encode($datosApasar);
+                        }
+                    }
+                    else{
+                        $estado = false;
+                        $datosApasar= array('estado'=>$estado); 
+                        echo json_encode($datosApasar);
+                    }
+
+                    $tasca = null;
+                    $idTasca = null;
+                    $comentario = null;
+                    $estado = null;
+
+                    if($method == 'PUT' ){
+                        
+                        $idTasca = $bdd->veureUnaTasca($data->$idTasca);
+                        $comentario = $data->$comentario;
+                        $estado = $data->$estado;
+
+                        if($rol == 'gestor' || $rol == 'tecnic' || $idTasca != false){
+                            $tasca = $bdd->updateTasca($idTasca, $comentario, $estado);
+                            $datosApasar = array('rol' => $rol, 'tasques' => $tasques);
+                            echo json_encode($datosApasar);
+                        }
+                    }
+                }
+
+
                               
                 else {
                     //si la cookie que nos pasa no existe

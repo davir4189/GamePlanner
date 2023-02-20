@@ -63,6 +63,7 @@
                 }
             },
 
+
             //funcion para borrar tarea
             borrar() {
             axios.delete('http://localhost/api/', {

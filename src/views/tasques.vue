@@ -86,12 +86,14 @@ export default {
                     //ordenar por estado
                     var ordenado = [];
 
+                    //primero proceo
                     for (var i = 0; i < resposta.data.tasques.length; i++) {
                         if (resposta.data.tasques[i].estat == "proces") {
                             ordenado.push(resposta.data.tasques[i])
                         }
                     }
 
+                    //segundo pediente
                     for (let i = 0; i < resposta.data.tasques.length; i++) {
 
                         if (resposta.data.tasques[i].estat == "pendent") {
@@ -99,6 +101,7 @@ export default {
                         }
                     }
 
+                    //tercero final
                     for (let i = 0; i < resposta.data.tasques.length; i++) {
                         if (resposta.data.tasques[i].estat == "final") {
                             ordenado.push(resposta.data.tasques[i])

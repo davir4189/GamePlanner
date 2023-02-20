@@ -106,7 +106,7 @@ export default {
                     console.log(ordenado)
                     this.componentes = ordenado;
                 }
-            }) //this.dadesUsuaris = usuaris.data.list)
+            })
         }
     },
     created() {
