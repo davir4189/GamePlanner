@@ -30,6 +30,7 @@
 </template>
 
 <script>
+
     import axios from 'axios';
 
     export default{
@@ -37,7 +38,6 @@
         props:['item'],
         methods:{
             mirarEstado(){
-
                 if(this.item.estat==="proces"){
                     var divEdit = document.getElementById(this.item.idTasca);
                     divEdit.classList.add("blink");
@@ -62,6 +62,7 @@
                 }
             },
 
+
             borrar() {
             axios.delete('http://localhost/api/', {
                 data: { direccion: this.$route.name,token: sessionStorage.getItem("token"),idTasca: this.item.idTasca  },
@@ -72,6 +73,7 @@
 
             })
         }
+
         },
         mounted(){
             this.mirarEstado();
