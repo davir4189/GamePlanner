@@ -17,7 +17,9 @@ export default {
         }
     },
     methods: {
+        //funcion login
         login() {
+            //si campos diferente de vacio entra
             if(this.email!="" || this.contrasenya !=""){
             axios.post('http://localhost/api/', {
                 email: this.email,
@@ -29,7 +31,9 @@ export default {
 
                 if(resposta.data){              
                     sessionStorage.token=resposta.data.token;
+                    //creacion cookie token
                     document.cookie = "token='" + resposta.data.token + "';max-age=3600;path=/";
+                    //comprobamos rol y mostramos vista
                     if(resposta.data.rol=='admin'){
                          this.$router.push('/admin') ;
                     }
@@ -43,6 +47,7 @@ export default {
 
                 }             
             })
+            //si error, mostramos
             .catch((error) => {
                 if(error.response.status === 404)
                 {

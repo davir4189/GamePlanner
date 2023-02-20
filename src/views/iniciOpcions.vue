@@ -27,7 +27,7 @@
             <hr>
         </div>
 
-        <!-- V-IF segun la usuari que nos llegue -->
+        <!-- V-IF comporbar tipo de usuario para mostrar vista correcta -->
         <div class="container">
             <iniciAdmin v-if="tipoUsuario == 'admin'"></iniciAdmin>
             <iniciGestor v-if="tipoUsuario == 'gestor'"></iniciGestor>
@@ -76,13 +76,14 @@ export default {
     },
 
     methods: {
+        //funcion revisar token
         revisionPermisos() {
+            //no token, mandamos a login
             if (sessionStorage.getItem("token") === null) {
                 this.$router.push('/login');
-
             }
             else {
-                //comprobamos que exista
+                //comprobamos que token existe
                 axios.post('http://localhost/api/', {
                     token: sessionStorage.getItem("token"),
                     direccion: this.$route.name
@@ -94,7 +95,7 @@ export default {
 
                         sessionStorage.tipoUsuario = resultado.data.rol;
 
-
+                        //si token, comprobamos rol, mostramos vista
                         if (resultado.data.rol == 'admin') {
                             this.$router.push('/admin');
                         }
@@ -108,6 +109,7 @@ export default {
 
                     }
                     else {
+                        //sino login
                         this.$router.push('/login');
                     }
                 }

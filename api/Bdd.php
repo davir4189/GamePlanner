@@ -85,6 +85,26 @@ class BdD
 
     }
 
+    public function recuperarIdUsuari_token($token)
+    {
+        $resposta = null;
+        $SQL = "SELECT * FROM usuari WHERE token = :token";
+        $consulta = (BdD::$connection)->prepare($SQL);
+        $consulta->bindParam(':token', $token);
+        $qFiles = $consulta->execute();
+        if ($consulta->rowCount() > 0) {
+            //asosiamos el resultado en un array para tener acceso a el
+            $consulta->setFetchMode(PDO::FETCH_ASSOC);
+            $result = $consulta->fetchAll();
+            foreach ($result as $fila) {
+                $resposta[] = $fila;
+            }
+            return $resposta[0]['idUsuari'];
+        } else
+            return false;
+
+    }
+
     public function comprobarExisteixPerToken($tokenAntic)
     { //despues del login buscamos por el token
         $resposta = null;
@@ -136,6 +156,7 @@ class BdD
         $consulta->bindParam(':equipVisitant', $equipVisitant);
         $consulta->bindParam(':dataCreacio', $dataCreacio);
         $qFiles = $consulta->execute();
+        return true;
     }
 
     public function borrarTasca($idTasca)
@@ -159,7 +180,7 @@ class BdD
             foreach ($result as $fila) {
                 $resposta[] = $fila;
             }
-            echo json_encode($resposta); //retornamos los datos
+            return $resposta; //retornamos los datos
         } else {
             return false;
         }
@@ -204,7 +225,10 @@ class BdD
         $consulta->bindParam(':comentari', $comentari);
         $consulta->bindParam(':estat', $estat);
         $qFiles = $consulta->execute();
+        return true;
     }
+
+
     public function updateTascaAdmin($idTasca, $nom, $descripicio, $prioritat, $estat, $comentari, $direccio, $empleat, $equipLocal, $equipVisitant, $dataCreacio)
     {
         $SQL = 'UPDATE tasca SET nom = :nom, descripicio = :descripicio, prioritat = :prioritat, estat = :estat, comentari = :comentari, direccio = :direccio,empleat= :empleat, equipLocal = :equipLocal, equipVisitant = :equipVisitant,dataCreacio=:dataCreacio WHERE idTasca = :idTasca';

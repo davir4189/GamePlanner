@@ -25,8 +25,8 @@
         </div>
 
         <div class="container">
-            <myWorks>
-
+            <myWorks v-for="item in componentes" :key="item.idTasca" :item="item">
+            
             </myWorks>
         </div>
 
@@ -56,10 +56,58 @@
 
 <script>
     import myWorks from '@/components/myWorks.vue'
+    import axios from 'axios';
 
     export default{
         name:"misTrabajos",
-        components:{myWorks}
+        components: { myWorks },
+        data() {
+            return {
+                componentes: '',
+            }
+        },
+        methods: {
+            getDades(){
+                axios.post('http://localhost/api/', {
+                    direccion: this.$route.name,
+                    token: sessionStorage.getItem("token"),
+                }).then((resposta) => {
+
+                    console.log(resposta)
+
+                    if (resposta.data.rol) {
+
+                    //ordenar por estado
+                    var ordenado = [];
+
+                    for (var i = 0; i < resposta.data.tasques.length; i++) {
+                        if (resposta.data.tasques[i].estat == "proces") {
+                            ordenado.push(resposta.data.tasques[i])
+                        }
+                    }
+
+                    for (let i = 0; i < resposta.data.tasques.length; i++) {
+                        if (resposta.data.tasques[i].estat == "pendent") {
+                            ordenado.push(resposta.data.tasques[i])
+                        }
+                    }
+
+                    for (let i = 0; i < resposta.data.tasques.length; i++) {
+                        if (resposta.data.tasques[i].estat == "final") {
+                            ordenado.push(resposta.data.tasques[i])
+                        }
+                    }
+
+                    console.log(ordenado)
+                    this.componentes = ordenado;
+                    }
+                })
+            }
+        },
+        created(){
+            this.getDades();
+            console.log(this.$route.name);
+        }
     }
 </script>
     

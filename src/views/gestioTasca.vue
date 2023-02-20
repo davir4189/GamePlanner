@@ -24,8 +24,8 @@
             <hr>
         </div>
 
-        <afegirTasca></afegirTasca>
-        <editarTasca></editarTasca>
+        <afegirTasca v-if="nomPagina == 'addWork'"></afegirTasca>
+        <editarTasca v-else></editarTasca>
 
         <footer>
             <div class="footer">
@@ -52,13 +52,28 @@
 </template>
 
 <script>
-
 import afegirTasca from '@/components/afegirTasca.vue';
 import editarTasca from '@/components/editarTasca.vue';
 
 export default{
     name:"gestioTasca",
-    components:{afegirTasca,editarTasca}
+    components:{afegirTasca,editarTasca},
+    // data() {
+    //     return {
+    //         nomPagina: this.$route.name,
+    //         tipoUsuario: ""
+    //     }
+    // },
+    // methods: {
+    //     mostrar(){
+    //         console.log(this.$route.name);
+    //     }
+    // },
+    // created(){
+    //     this.mostrar();
+    // }
+
+    
 }
 
 </script>

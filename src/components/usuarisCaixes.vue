@@ -24,7 +24,9 @@ export default{
     name:"usuarisCaixes",
     props:['item'],
     methods: {
+        //funcion mirar rol
         mirarRol(){
+            //si rol admin, cambiamos estilo caja
             if(this.item.rol === "admin"){
                 var admins = document.getElementById(this.item.idUsuari)
                 admins.classList.add("admins");
