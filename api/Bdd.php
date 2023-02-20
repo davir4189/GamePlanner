@@ -136,6 +136,13 @@ class BdD{
         $consulta->bindParam(':dataCreacio',$dataCreacio );
         $qFiles = $consulta->execute();
     }
+
+    public function borrarTasca($idTasca){
+        $SQL="DELETE FROM `tasca` WHERE `tasca`.`idTasca` = :idTasca ;";
+        $consulta = (BdD::$connection)->prepare($SQL);
+        $consulta->bindParam(':nom',$idTasca);
+        $qFiles = $consulta->execute();
+    }
     //buscamos las tascas del usuario
     public function veureTasquesUsuari($idUsuario){
         $resposta = null;
@@ -157,6 +164,20 @@ class BdD{
             return false;
         }
 
+    }
+    public function veureUnaTasca($idTasca){
+        $resposta = null;
+        $SQL = 'SELECT * FROM tasca WHERE `tasca`.`idTasca` = :idTasca ;';
+        $consulta = (BdD::$connection)->prepare($SQL);
+        $consulta->bindParam(':idTasca',$idTasca);
+        $qFiles = $consulta->execute();
+        if ($consulta->rowCount() > 0) 
+        {
+			return true;
+        }
+        else {
+            return false;
+        }
     }
     public function veureTasques(){
         $resposta = null;
