@@ -64,9 +64,9 @@ class server
                     if($rol=='admin'||$rol=='gestor'){
                        
                         if($method=='GET'){
-                        $tasques=$bdd->veureTasques();                  
-                        $datosApasar= array('rol'=>$rol,'tasques'=>$tasques);  
-                        echo json_encode($datosApasar);
+                            $tasques=$bdd->veureTasques();                  
+                            $datosApasar= array('rol'=>$rol,'tasques'=>$tasques);  
+                            echo json_encode($datosApasar);
                         }
                         //cuando la coneccion a axios es delete
                         elseif($method=="DELETE"){
@@ -76,6 +76,9 @@ class server
                                 $idTasca=$data->idTasca;
                                 $bdd->borrarTasca($idTasca);
                                 echo (true);
+                            }
+                            else{
+                                echo false;
                             }
                         }
                     }
@@ -119,5 +122,3 @@ class server
 
 $server=new server();
 $server->serve();
-
-?>

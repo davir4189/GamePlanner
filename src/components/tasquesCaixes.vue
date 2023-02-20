@@ -11,7 +11,6 @@
             <div class="container5">
                 <div class="div2">
                     <RouterLink to="/works/editWork">
-                        <!-- hay que poner en onclick y te redireccion con la funcion -->
                         <button class="button" id="edit">EDIT</button>
                     </RouterLink>
                 </div>
@@ -49,12 +48,9 @@ import axios from 'axios';
                     divEdit2.style.opacity = "70%";
                     divEdit2.style.pointerEvents = "none";
                 }
-            },
-            borrarBoton(){
-               //Aqui hay una redirccion pasando el item
                 }
             }
-        },
+        ,
         mounted(){
             this.mirarEstado();
         }
