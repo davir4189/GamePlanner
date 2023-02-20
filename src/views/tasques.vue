@@ -1,5 +1,4 @@
-<template>
-    <!DOCTYPE html>
+<template><!DOCTYPE html>
     <html lang="en">
 
     <head>
@@ -61,7 +60,6 @@
     </body>
 
     </html>
-
 </template>
 
 <script>
@@ -84,39 +82,33 @@ export default {
             }).then((resposta) => {
                 console.log(resposta.data)
                 if (resposta.data.rol) {
+
                     //ordenar por estado
                     var ordenado = [];
 
                     for (var i = 0; i < resposta.data.tasques.length; i++) {
-
                         if (resposta.data.tasques[i].estat == "proces") {
                             ordenado.push(resposta.data.tasques[i])
-
                         }
-
                     }
+
                     for (let i = 0; i < resposta.data.tasques.length; i++) {
 
                         if (resposta.data.tasques[i].estat == "pendent") {
                             ordenado.push(resposta.data.tasques[i])
-
                         }
-
                     }
-                    for (let i = 0; i < resposta.data.tasques.length; i++) {
 
+                    for (let i = 0; i < resposta.data.tasques.length; i++) {
                         if (resposta.data.tasques[i].estat == "final") {
                             ordenado.push(resposta.data.tasques[i])
-
                         }
-
                     }
+
                     console.log(ordenado)
                     this.componentes = ordenado;
-
                 }
-            }
-            )
+            })
         }
     },
     created() {
@@ -125,6 +117,4 @@ export default {
 }
 </script>
 
-<style src="../../styles/works.css" scoped>
-
-</style>
+<style src="../../styles/works.css" scoped></style>

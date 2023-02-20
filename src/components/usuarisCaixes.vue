@@ -1,5 +1,5 @@
 <template>
-    <div class="container-1">
+    <div class="container-1" :id="item.idUsuari">
         <p class="name" id="name">{{ item.nom }}</p>
         <p class="role" id="role">{{ item.rol }}</p>
         <div class="container-2">
