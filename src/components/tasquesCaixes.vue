@@ -8,6 +8,8 @@
             <p class="trabajador">Employee: {{ item.empleat }}</p>
             <p class="trabajador">Priority: {{ item.prioritat }} </p>
             <p class="trabajador ">Status: {{ item.estat }}</p>
+        </div>
+        <div class="container4" id="map">
             <div class="container5">
                 <div class="div2">
                     <RouterLink to="/works/editWork">
@@ -22,28 +24,27 @@
                 </div>
             </div>
         </div>
-        <div class="container4" id="map">
-
-        </div>
     </div>
 </template>
 
 <script>
-import axios from 'axios';
-
-
+    // import axios from 'axios';
+    // import googleMaps from './googleMaps.vue';
 
     export default{
         name:"tasquesCaixes",
         props:['item'],
+        // components: {
+        //     googleMaps
+        // },
         methods:{
             mirarEstado(){
+
                 if(this.item.estat==="proces"){
-                    console.log("entra")
                     var divEdit = document.getElementById(this.item.idTasca);
-                    divEdit.style.border = "5px solid red";
                     divEdit.classList.add("blink");
                 }
+
                 if(this.item.estat==="final"){
                     var divEdit2 = document.getElementById(this.item.idTasca);
                     divEdit2.tabIndex = -1;
@@ -51,19 +52,19 @@ import axios from 'axios';
                     divEdit2.style.pointerEvents = "none";
                 }
             },
+
             borrarBoton(){
                //Aqui hay una redirccion pasando el item
-                }
             }
         },
         mounted(){
             this.mirarEstado();
         }
-
     }
 </script>
 
 
 <style src="../../styles/works.css" scoped>
+
 
 </style>
