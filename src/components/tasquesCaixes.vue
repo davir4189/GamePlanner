@@ -28,18 +28,12 @@
 </template>
 
 <script>
-    // import axios from 'axios';
-    // import googleMaps from './googleMaps.vue';
-
+ 
     export default{
         name:"tasquesCaixes",
         props:['item'],
-        // components: {
-        //     googleMaps
-        // },
         methods:{
             mirarEstado(){
-
                 if(this.item.estat==="proces"){
                     var divEdit = document.getElementById(this.item.idTasca);
                     divEdit.classList.add("blink");
@@ -52,10 +46,6 @@
                     divEdit2.style.pointerEvents = "none";
                 }
             },
-
-            borrarBoton(){
-               //Aqui hay una redirccion pasando el item
-            }
         },
         mounted(){
             this.mirarEstado();
