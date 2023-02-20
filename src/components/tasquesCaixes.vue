@@ -41,7 +41,8 @@ import axios from 'axios';
                 if(this.item.estat==="proces"){
                     console.log("entra")
                     var divEdit = document.getElementById(this.item.idTasca);
-                    divEdit.style.border = "3px solid red";
+                    divEdit.style.border = "5px solid red";
+                    divEdit.classList.add("blink");
                 }
                 if(this.item.estat==="final"){
                     var divEdit2 = document.getElementById(this.item.idTasca);
