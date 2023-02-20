@@ -64,6 +64,7 @@ class server
                     if($rol=='admin'||$rol=='gestor'){
                        
                         if($method=='POST'){
+
                             $tasques=$bdd->veureTasques();                  
                             $datosApasar= array('rol'=>$rol,'tasques'=>$tasques);  
                             echo json_encode($datosApasar);
@@ -80,6 +81,9 @@ class server
                             }
                             else{
                                 echo json_encode("entra2");
+                            }
+                            else{
+                                echo false;
                             }
                         }
                    }

@@ -30,6 +30,7 @@
 </template>
 
 <script>
+
     import axios from 'axios';
 
     export default{
@@ -38,7 +39,6 @@
         methods:{
             //funcion para mirar el estado de la tarea
             mirarEstado(){
-                //si proceso estilos diferentes
                 if(this.item.estat==="proces"){
                     var divEdit = document.getElementById(this.item.idTasca);
                     divEdit.classList.add("blink");
@@ -63,7 +63,11 @@
                 }
             },
 
+<<<<<<< HEAD
             //funcion para borrar tarea
+=======
+
+>>>>>>> b484e3696576aab094e96ff8f849d4ba85d8c681
             borrar() {
             axios.delete('http://localhost/api/', {
                 data: { direccion: this.$route.name,token: sessionStorage.getItem("token"),idTasca: this.item.idTasca  },
@@ -74,6 +78,7 @@
                 window.location.reload();
             })
         }
+
         },
         mounted(){
             this.mirarEstado();
