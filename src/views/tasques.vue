@@ -65,7 +65,7 @@
 <script>
 import tasquesCaixes from '@/components/tasquesCaixes.vue';
 import axios from 'axios';
-
+console.log("entra");
 export default {
     name: "totesTasques",
     components: { tasquesCaixes },
@@ -80,7 +80,7 @@ export default {
                 direccion: this.$route.name,
                 token: sessionStorage.getItem("token"),
             }).then((resposta) => {
-                console.log(resposta.data)
+  
                 if (resposta.data.rol) {
 
                     //ordenar por estado
@@ -108,7 +108,7 @@ export default {
                         }
                     }
 
-                    console.log(ordenado)
+                    console.log(resposta)
                     this.componentes = ordenado;
                 }
             })
@@ -116,6 +116,7 @@ export default {
     },
     created() {
         this.cargarComponentes()
+       
     }
 }
 </script>

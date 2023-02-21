@@ -89,7 +89,7 @@ export default {
                     direccion: this.$route.name
                 }).then((resultado) => {
 
-                    if (resultado.data) {
+                    if (resultado.data.rol) {
                         console.log(resultado.data)
                         this.tipoUsuario = resultado.data.rol;
 

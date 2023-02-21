@@ -8,7 +8,7 @@ class server
     {
         $uri = $_SERVER['REQUEST_URI']; //guardamos el url que nos envia
         $method = $_SERVER['REQUEST_METHOD']; //si es un get, pull,
-       
+        
         //array_shift($paths);
 
         // var_dump($recurso);
@@ -58,12 +58,13 @@ class server
 
                 }
                 //nos llega aqui cuando hacemos la coneccion a la api algun de estos url
-                elseif($recurso=='works' ){
+                elseif($recurso=='works' ||$recurso=="/works/editWork" ){
                     $rol=  $bdd->recuperarRol_token($token);
                     
                     if($rol=='admin'||$rol=='gestor'){
                        
                         if($method=='POST'){
+
                             $tasques=$bdd->veureTasques();                  
                             $datosApasar= array('rol'=>$rol,'tasques'=>$tasques);  
                             echo json_encode($datosApasar);
@@ -71,18 +72,14 @@ class server
                         //cuando la coneccion a axios es delete
                         elseif($method=="DELETE"){
                             //me devuelve true or false, por si existe la tasca
-                             $idTasca1= $data->idTasca;
-                            $idTasca=$bdd->veureUnaTasca($idTasca1);
+                            $idTasca=$bdd->veureUnaTasca($data->idTasca);
                             if($idTasca){
                                 $idTasca=$data->idTasca;
                                 $bdd->borrarTasca($idTasca);
-                                
-                            }
-                            else{
-                                echo json_encode("entra2");
+                                echo (true);
                             }
                         }
-                   }
+                    }
                     else{
                         
                         $rol=false;
@@ -92,6 +89,7 @@ class server
                    
 
                 }
+
 
                 elseif($recurso == 'addWork'){
                     $nom = "";
@@ -173,6 +171,8 @@ class server
                         }
                     }
                 }
+
+
                               
                 else {
                     //si la cookie que nos pasa no existe
@@ -189,8 +189,7 @@ class server
             }
             
             $bdd->insertarToken_token($value); 
-			$datosApasar=array('value'=>$value,'token'=>$token,'dataPasar'=> $data);
-            echo $value;
+			echo $value;//envia 
         }
 
 
