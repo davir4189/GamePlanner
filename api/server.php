@@ -8,199 +8,204 @@ class server
     {
         $uri = $_SERVER['REQUEST_URI']; //guardamos el url que nos envia
         $method = $_SERVER['REQUEST_METHOD']; //si es un get, pull,
-        
+
         //array_shift($paths);
 
         // var_dump($recurso);
         //creamos objeto base de datos
         $bdd = new bdd();
         $data = json_decode(file_get_contents('php://input'));
-        
-        $token=null;
-        if($data!=null){
-        $token= $data->token;
+
+        $token = null;
+        if ($data != null) {
+            $token = $data->token;
         }
         //si no tiene cookie no entramos
 
-        if ($token!=null) 
-		{
-            $recurso=$data->direccion;
+        if ($token != null) {
+            $recurso = $data->direccion;
             //comprobamos que el token existe
             if ($bdd->existeixToken_bbd_usuari($token) || $bdd->existeixToken_bbd_token($token))
                 if ($recurso == 'login') {
-                    
+
 
                     if ($bdd->existeixToken_bbd_token($token)) {
                         //Acaba de iniciar, comprobamos que existe en la bdd token
                         $email = $data->email;
                         $contrasenya = $data->contrasenya;
                         $token = $bdd->comprobarExisteix($email, $contrasenya);
-                        if ($token) { 
-                            $rol=$bdd->recuperarRol($email,$contrasenya);
+                        if ($token) {
+                            $rol = $bdd->recuperarRol($email, $contrasenya);
 
                             header('HTTP/1.1 200 OK');
-                            $datosApasar=array('rol'=>$rol,'token'=>$token);
+                            $datosApasar = array('rol' => $rol, 'token' => $token);
                             echo json_encode($datosApasar);
                         } else {
-                            
-                            echo json_encode($token);//sera falso
+
+                            echo json_encode($token); //sera falso
                             header('HTTP/1.1 404 Not Found');
                         }
                     }
 
 
-                }
-                elseif ($recurso=='admin'||$recurso=='manager'||$recurso=='technical'){
-                    $rol=  $bdd->recuperarRol_token($token);
-                    
-                    $datosApasar= array('rol'=>$rol);                
+                } elseif ($recurso == 'admin' || $recurso == 'manager' || $recurso == 'technical') {
+                    $rol = $bdd->recuperarRol_token($token);
+
+                    $datosApasar = array('rol' => $rol);
                     echo json_encode($datosApasar);
 
                 }
                 //nos llega aqui cuando hacemos la coneccion a la api algun de estos url
-                elseif($recurso=='works' ||$recurso=="/works/editWork" ){
-                    $rol=  $bdd->recuperarRol_token($token);
-                    
-                    if($rol=='admin'||$rol=='gestor'){
-                       
-                        if($method=='POST'){
+                elseif ($recurso == 'works') {
+                    $rol = $bdd->recuperarRol_token($token);
 
-                            $tasques=$bdd->veureTasques();                  
-                            $datosApasar= array('rol'=>$rol,'tasques'=>$tasques);  
+                    if ($rol == 'admin' || $rol == 'gestor') {
+
+                        if ($method == 'POST') {
+                            $tasques = $bdd->veureTasques();
+                            $datosApasar = array('rol' => $rol, 'tasques' => $tasques);
                             echo json_encode($datosApasar);
                         }
                         //cuando la coneccion a axios es delete
-                        elseif($method=="DELETE"){
+                        elseif ($method == "DELETE") {
                             //me devuelve true or false, por si existe la tasca
-                            $idTasca=$bdd->veureUnaTasca($data->idTasca);
-                            if($idTasca){
-                                $idTasca=$data->idTasca;
+                            $idTasca1 = $data->idTasca;
+                            $idTasca = $bdd->veureUnaTasca($idTasca1);
+                            if ($idTasca) {
+                                $idTasca = $data->idTasca;
                                 $bdd->borrarTasca($idTasca);
-                                echo (true);
+
+                            } else {
+                                echo json_encode("entra2");
                             }
                         }
-                    }
-                    else{
-                        
-                        $rol=false;
-                        $datosApasar= array('rol'=>$rol); 
+                    } else {
+
+                        $rol = false;
+                        $datosApasar = array('rol' => $rol);
                         echo json_encode($datosApasar);
                     }
-                   
-
-                }
 
 
-                elseif($recurso == 'addWork'){
-                    $nom = "";
-                    $fecha = "";
-                    $equipLocal = "";
-                    $equipVisitant = "";
-                    $prioritat = "";
-                    $empleat = "";
-                    $descripcio = "";
-                    $tasca = "";
+                } 
+                
+                elseif ($recurso == 'addWork') {
 
-
-                    $rol=  $bdd->recuperarRol_token($token);
-                    if($rol == 'admin' || $rol == 'gestor'){
-                        
-                        $nom = $data->$nom;
-                        $fecha = $data->$fecha;
-                        $equipLocal = $data->$equipLocal;
-                        $equipVisitant = $data->$equipVisitant;
-                        $prioritat = $data->$prioritat;
-                        $empleat = $data->$empleat;
-                        $descripcio = $data->$descripcio;
-                        echo "hoooola";
-                        if($method == 'POST'){
-                            echo "adei";
-                            $tasca = $bdd->crearTasca($nom, $descripcio, $prioritat, "pedent", null, null, $empleat, $equipLocal, $equipVisitant, null);
-                        }
-                    }
-                }
-
-                elseif ($recurso == 'employees'){
-                    
                     $rol = $bdd->recuperarRol_token($token);
 
-                    if($rol == 'admin'){
+                    if ($rol == 'admin' || $rol == 'gestor') {
+
+                        if ($method == 'POST') 
+                        {
+                            $bdd->crearTasca($data->nom, $data->descripicio, $data->prioritat, "pendent", "", "", $data->dataTasca, $data->empleat, "", "");
+                        }
+                        else 
+                        {
+                            header('HTTP/1.1 405 Mètode no disponible');
+                        }
+                    }
+                } 
+                
+                elseif ($recurso == 'employees') {
+
+                    $rol = $bdd->recuperarRol_token($token);
+
+                    if ($rol == 'admin') {
                         $usuaris = $bdd->veureUsers();
                         $datosApasar = array('rol' => $rol, 'usuaris' => $usuaris);
                         echo json_encode($datosApasar);
                     }
 
+                } 
+
+                elseif ($recurso == 'addEmployee'){
+
+                    $rol = $bdd->recuperarRol_token($token);
+
+                    if($rol == 'admin')
+                    {
+                        if($method == "POST")
+                        {
+                            $bdd->crearUsuari($data->nom, $data->cognom, $data->contrasenya, $data->email, $data->rol, "");
+                        } 
+                        else 
+                        {
+                            header('HTTP/1.1 405 Mètode no disponible');
+                        }
+                    }
                 }
-
-                elseif ($recurso == 'myWorks'){
-
+                
+                elseif ($recurso == 'myWorks') {
+                    
                     $rol = $bdd->recuperarRol_token($token);
                     $idUsuari = null;
 
-                    if($method == 'POST'){
-                        
+                    if ($method == 'POST') {
+
                         $idUsuari = $bdd->recuperarIdUsuari_token($token);
 
-                        if($rol == 'gestor' || $rol == 'tecnic' || $idUsuari != false){
+                        if ($rol == 'gestor' || $rol == 'tecnic' || $idUsuari != false) {
                             $tasques = $bdd->veureTasquesUsuari($idUsuari);
                             $datosApasar = array('rol' => $rol, 'tasques' => $tasques);
                             echo json_encode($datosApasar);
                         }
-                    }
-                    else{
+                    } else {
                         $estado = false;
-                        $datosApasar= array('estado'=>$estado); 
+                        $datosApasar = array('estado' => $estado);
                         echo json_encode($datosApasar);
                     }
 
                     $tasca = null;
                     $idTasca = null;
-                    $comentario = null;
-                    $estado = null;
+                    $comentari = null;
+                    $estat = null;
 
-                    if($method == 'PUT' ){
-                        
-                        $idTasca = $bdd->veureUnaTasca($data->$idTasca);
-                        $comentario = $data->$comentario;
-                        $estado = $data->$estado;
+                    if ($method == 'PUT') {
 
-                        if($rol == 'gestor' || $rol == 'tecnic' || $idTasca != false){
-                            $tasca = $bdd->updateTasca($idTasca, $comentario, $estado);
+                        $idTasca = $data->idTasca;
+                        $comentari = $data->comentari;
+                        $estat = $data->estat;
+
+                        if ($rol == 'gestor' || $rol == 'tecnic' || $bdd->veureUnaTasca($idTasca)) {
+                            $tasca = $bdd->updateTasca($idTasca, $comentari, $estat);
                             $datosApasar = array('rol' => $rol, 'tasques' => $tasques);
                             echo json_encode($datosApasar);
+                        } else {
+                            http_response_code(403);
+                            echo json_encode(array('error' => 'No tiene permiso para actualizar esta tarea'));
                         }
                     }
-                }
-
-
-                              
+                } 
+                
                 else {
                     //si la cookie que nos pasa no existe
                     header('HTTP/1.1 401 Unauthorized');
                     echo false;
                 }
-        } else 
-		{
+        } 
+
+        else {
             //en el caso que no tenga una cookie token
             $value = $this->tokenAleatorio();
             //comprobamos que el token no exista en la bdd
             while ($bdd->existeixToken_bbd_usuari($value)) {
                 $value = $this->tokenAleatorio();
             }
-            
-            $bdd->insertarToken_token($value); 
-			echo $value;//envia 
+
+            $bdd->insertarToken_token($value);
+            $datosApasar = array('value' => $value, 'token' => $token, 'dataPasar' => $data);
+            echo $value;
         }
 
 
     }
-        public function tokenAleatorio()
-        {
-            $caracteres_permitidos = '0kjkjlj123456789abcdefghijklmno897897pqrstuvwxyzABCDEFGHI6546JKLMNOPQRSTUVWXYZ';
-            $longitud = 25;
-            return substr(str_shuffle($caracteres_permitidos), 0, $longitud);
-        }
+    public function tokenAleatorio()
+    {
+        $caracteres_permitidos = '0kjkjlj123456789abcdefghijklmno897897pqrstuvwxyzABCDEFGHI6546JKLMNOPQRSTUVWXYZ';
+        $longitud = 25;
+        return substr(str_shuffle($caracteres_permitidos), 0, $longitud);
+    }
 }
 
-$server=new server();
+$server = new server();
 $server->serve();

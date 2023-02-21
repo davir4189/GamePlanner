@@ -65,7 +65,7 @@
 <script>
 import tasquesCaixes from '@/components/tasquesCaixes.vue';
 import axios from 'axios';
-console.log("entra");
+
 export default {
     name: "totesTasques",
     components: { tasquesCaixes },

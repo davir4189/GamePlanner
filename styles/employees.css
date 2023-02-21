@@ -132,6 +132,10 @@ body{
     transition: 0.3s;
 }
 
+.admins{
+    background-color: black;
+}
+
 /* FOOTER */
 
 .footer{

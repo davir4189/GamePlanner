@@ -32,7 +32,7 @@
         </RouterLink>
 
         <div class="container">
-            <usuarisCaixes v-for="usuari in dadesUsuaris" :key="usuari.idUsuari">
+            <usuarisCaixes v-for="usuari in componentes" :key="usuari.idUsuari" :item="usuari">
 
             </usuarisCaixes>
         </div>
@@ -75,31 +75,31 @@ export default {
     },
     methods: {
         getDades() {
-            axios.get('http://localhost/api/', {
+            axios.post('http://localhost/api/', {
                 direccion: this.$route.name,
                 token: sessionStorage.getItem("token"),
-            }).then((usuaris) => {
-                console.log(usuaris.data)
-                if (usuaris.data.rol) {
+            }).then((resposta) => {
+                console.log(resposta.data.usuaris)
+                if (resposta.data.rol) {
 
                     //ordenar por rol
                     var ordenado = [];
 
-                    for (var i = 0; i < usuaris.data.usuaris.length; i++) {
-                        if (usuaris.data.usuaris[i].rol == "admin") {
-                            ordenado.push(usuaris.data.tasques[i])
+                    for (var i = 0; i < resposta.data.usuaris.length; i++) {
+                        if (resposta.data.usuaris[i].rol == "admin") {
+                            ordenado.push(resposta.data.usuaris[i])
                         }
                     }
 
-                    for (let i = 0; i < usuaris.data.usuaris.length; i++) {
-                        if (usuaris.data.usuaris[i].rol == "pendent") {
-                            ordenado.push(usuaris.data.tasques[i])
+                    for (let i = 0; i < resposta.data.usuaris.length; i++) {
+                        if (resposta.data.usuaris[i].rol == "gestor") {
+                            ordenado.push(resposta.data.usuaris[i])
                         }
                     }
 
-                    for (let i = 0; i < usuaris.data.usuaris.length; i++) {
-                        if (usuaris.data.usuaris[i].rol == "final") {
-                            ordenado.push(usuaris.data.tasques[i])
+                    for (let i = 0; i < resposta.data.usuaris.length; i++) {
+                        if (resposta.data.usuaris[i].rol == "tecnic") {
+                            ordenado.push(resposta.data.usuaris[i])
                         }
                     }
 
