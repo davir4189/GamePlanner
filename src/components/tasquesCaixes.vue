@@ -38,13 +38,8 @@
         methods:{
             //funcion para mirar el estado de la tarea
             mirarEstado(){
-<<<<<<< HEAD
-                if(this.item.estat==="proces")
-                {
-=======
                 //si proceso estilos diferentes
                 if(this.item.estat==="proces"){
->>>>>>> 74af1af1dd19f1973f85209978d9eb29db3cd6a9
                     var divEdit = document.getElementById(this.item.idTasca);
                     divEdit.classList.add("blink");
 
@@ -65,14 +60,17 @@
                     divEdit2.tabIndex = -1;
                     divEdit2.style.opacity = "70%";
                     divEdit2.style.pointerEvents = "none";
+
+                    var imgLive2 = document.querySelector('#imgLive-' + this.item.idTasca);
+                    imgLive2.style.display = "none";
+                }
+                //si pendent estilo diferente
+                if(this.item.estat==="pendent"){
+                    var imgLive3 = document.querySelector('#imgLive-' + this.item.idTasca);
+                    imgLive3.style.display = "none";
                 }
             },
-<<<<<<< HEAD
-=======
-
-
             //funcion para borrar tarea
->>>>>>> 74af1af1dd19f1973f85209978d9eb29db3cd6a9
             borrar() {
             axios.delete('http://localhost/api/', {
                 data: { direccion: this.$route.name,token: sessionStorage.getItem("token"),idTasca: this.item.idTasca  },
