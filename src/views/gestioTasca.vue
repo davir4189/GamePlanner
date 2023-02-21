@@ -58,22 +58,20 @@ import editarTasca from '@/components/editarTasca.vue';
 export default{
     name:"gestioTasca",
     components:{afegirTasca,editarTasca},
-    // data() {
-    //     return {
-    //         nomPagina: this.$route.name,
-    //         tipoUsuario: ""
-    //     }
-    // },
-    // methods: {
-    //     mostrar(){
-    //         console.log(this.$route.name);
-    //     }
-    // },
-    // created(){
-    //     this.mostrar();
-    // }
-
-    
+    data() {
+        return {
+            nomPagina: this.$route.name,
+            tipoUsuario: ""
+        }
+    },
+    methods: {
+        mostrar(){
+            console.log(this.$route.name);
+        }
+    },
+    created(){
+        this.mostrar();
+    }
 }
 
 </script>

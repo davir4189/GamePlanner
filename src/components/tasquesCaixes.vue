@@ -39,7 +39,8 @@
         methods:{
             //funcion para mirar el estado de la tarea
             mirarEstado(){
-                if(this.item.estat==="proces"){
+                if(this.item.estat==="proces")
+                {
                     var divEdit = document.getElementById(this.item.idTasca);
                     divEdit.classList.add("blink");
 
@@ -62,12 +63,6 @@
                     divEdit2.style.pointerEvents = "none";
                 }
             },
-
-<<<<<<< HEAD
-            //funcion para borrar tarea
-=======
-
->>>>>>> b484e3696576aab094e96ff8f849d4ba85d8c681
             borrar() {
             axios.delete('http://localhost/api/', {
                 data: { direccion: this.$route.name,token: sessionStorage.getItem("token"),idTasca: this.item.idTasca  },

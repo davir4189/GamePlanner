@@ -2,25 +2,13 @@
     <div class="container">
         <div class="dades1">
             <input type="text" name="name" id="name" placeholder="Name" class="dades2" v-model="nom">
-            <input type="date" name="date" id="date" placeholder="Date" class="dades2" v-model="data">
+            <input type="date" name="date" id="date" placeholder="Date" class="dades2" v-model="dataTasca">
         </div>
     </div>
 
     <div class="container">
         <div class="dades1">
-            <select name="equipoLocal" id="equipoLocal" class="dades2" v-model="equipoLocal">
-                <option disabled selected>Equipo Local</option>
-                <option value="1">Equipo 1</option>
-                <option value="2">Equipo 2</option>
-            </select>
-
-            <select name="equipoVisitante" id="equipoVisitante" class="dades2" v-model="equipoVisitante">
-                <option disabled selected>Equipo Visitante</option>
-                <option value="1">Equipo 1</option>
-                <option value="2">Equipo 2</option>
-            </select>
-
-            <select name="priority" id="priority" class="dades2" v-model="prioridad">
+            <select name="priority" id="priority" class="dades2" v-model="prioritat">
                 <option disabled selected>Priority</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -33,87 +21,87 @@
                 <option value="9">9</option>
             </select>
 
-            <select name="user" id="user" class="dades2" v-model="trabajador">
-                <option value="1">Trabajador 1</option>
-                <option value="2">Trabajador 2</option>
-                <option value="3">Trabajador 3</option>
-            </select>
+            <input type="text" id="user" class="dades2" placeholder="id user" v-model="empleat">
         </div>
     </div>
 
     <div class="container">
         <div class="dades1">
-            <input type="text" name="description" id="description" placeholder="Description" class="dades3" v-model="descripcio">
+            <input type="text" name="description" id="description" placeholder="Description" class="dades3" v-model="descripicio">
         </div>
     </div>
 
-    <RouterLink to="/works">
-        <div class="container">
-            <button class="button-1" id="addWork" @click="añadirTrabajo">ADD WORK</button>
-        </div>
-    </RouterLink>
+    <div class="container">
+        <button class="button-1" id="addWork" @click="añadirTrabajo">ADD WORK</button>
+    </div>
+
+    <div class="container">
+        <p class="msgError1" id="msgError1">ERROR: fill in all fields</p>
+        <p class="msgError2" id="msgError2">ERROR: wrong date</p>
+    </div>
 </template>
 
 <script>
-// import axios from 'axios';
+import axios from 'axios';
 
 export default {
     name: "afegirTasca",
-    // data(){
-    //     return{
-    //         nom: "",
-    //         descripicio: "",
-    //         prioritat: "",
-    //         trabajador: "",
-    //     }
-    // },
-    // methods: {
-    //     //funcion revisar token
-    //     añadirTrabajo() {
-    //         //no token, mandamos a login
-    //         if (sessionStorage.getItem("token") === null) {
-    //             this.$router.push('/login');
-    //         }
-    //         else {
-    //             //comprobamos que token existe
-    //             axios.post('http://localhost/api/', {
-    //                 token: sessionStorage.getItem("token"),
-    //                 direccion: this.$route.name,
-    //                 nom: this.nom,
-    //                 data: this.data,
-    //                 equipoLocal: this.equipoLocal,
-    //                 equipoVisitante: this.equipoVisitante,
-    //                 prioridad: this.prioridad,
-    //                 trabajador: this.trabajador,
-    //                 descripcio: this.descripcio,
+    data(){
+        return{
+            nom: "",
+            dataTasca: "",
+            prioritat: "",
+            empleat: "",
+            descripicio: "",
+        }
+    },
+    methods: {
+        añadirTrabajo() {
 
-    //             }).then((resultado) => {
-    //                 console.log(resultado);
-    //                 if (resultado.data.token) {
-    //                     console.log(resultado.data)
+            if (this.valid() !== true) {
+                return;
+            }
 
-    //                     if (resultado.data.rol == 'admin' || resultado.data.rol == 'gestor') {
+            axios.post('http://localhost/api/', {
+                token: sessionStorage.getItem("token"),
+                direccion: this.$route.name,
+                nom: this.nom,
+                dataTasca: this.dataTasca,
+                prioritat: this.prioritat,
+                empleat: this.empleat,
+                descripicio: this.descripicio,
 
-    //                     }
-    //                     else{
-    //                         this.$router.push('/login');
-    //                     }
+            }).then((response) => {
+                console.log(response);
+                this.$router.push("/works");
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+        },
 
-    //                 }
-    //                 else {
-    //                     //sino login
-    //                     this.$router.push('/login');
-    //                 }
-    //             }
-    //             )
-    //         }
-    //     }
-    // },
-    // created(){
-    //     this.añadirTrabajo();
-    //     console.log(this.$route.name);
-    // }
-}
+        valid(){
+            if(this.nom == "" || this.dataTasca == "" || this.prioritat == "" || this.empleat == "" || this.descripicio == "")
+            {
+                var msgError1 = document.getElementById("msgError1");
+                msgError1.style.display = "block";
+                return false;
+            }
+
+            // Verificar si la fecha es anterior a la fecha actual
+            var fechaActual = new Date();
+            var fechaIngresada = new Date(this.dataTasca);
+
+            if (fechaIngresada < fechaActual) {
+                var msgError2 = document.getElementById("msgError2");
+                msgError2.style.display = "block";
+                return false;
+            }
+
+            return true;
+        }
+    }
+ }
 
 </script>
 

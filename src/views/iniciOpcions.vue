@@ -17,7 +17,7 @@
                 <p class="role">{{ nomPagina }}</p>
             </div>
             <div class="header-2">
-                <RouterLink to="/">
+                <RouterLink to="/login">
                     <button class="button-2" id="logOut">LOG OUT</button>
                 </RouterLink>
             </div>

@@ -111,6 +111,35 @@ body{
     transition: 0.3s;
 }
 
+.msgError1{
+    color: red;
+    font-weight: bold;
+    display: none;
+}
+
+.msgError2{
+    color: red;
+    font-weight: bold;
+    display: none;
+}
+
+.msgError3{
+    color: red;
+    font-weight: bold;
+    display: none;
+}
+
+.msgError4{
+    color: red;
+    font-weight: bold;
+    display: none;
+}
+
+.msgError5{
+    color: red;
+    font-weight: bold;
+    display: none;
+}
 
 /* FOOTER */
 

@@ -24,8 +24,8 @@
             <hr>
         </div>
 
-        <afegirUsuari></afegirUsuari>
-        <editarUsuari></editarUsuari>
+        <afegirUsuari v-if="nomPagina == 'addEmployee'"></afegirUsuari>
+        <editarUsuari v-else></editarUsuari>
 
         <footer>
             <div class="footer">
@@ -57,7 +57,21 @@
 
     export default{
         name:"gestioUsuari",
-        components:{afegirUsuari,editarUsuari}
+        components:{afegirUsuari,editarUsuari},
+        data() {
+            return {
+                nomPagina: this.$route.name,
+                tipoUsuario: ""
+            }
+        },
+        methods: {
+            mostrar(){
+                console.log(this.$route.name);
+            }
+        },
+        created(){
+            this.mostrar();
+        }
     }
 </script>
     
