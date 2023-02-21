@@ -141,6 +141,23 @@ body{
     transition: 0.3s;
 }
 
+.blink {
+    animation: blinker 3s linear infinite;
+  }
+  
+  @keyframes blinker {
+    50% {
+      background-color: rgb(255, 0, 0);
+    }
+  }
+
+  .msgFinish{
+    margin-top: 10px;
+    font-weight: bold;
+    display: none;
+    color: black;
+  }
+
 /* FOOTER */
 
 .footer{

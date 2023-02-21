@@ -14,7 +14,7 @@
                 <img src="../../images/logo.png" width="50" height="50" alt="Logo Game Planner"><p class="role">My Works</p>
             </div>
             <div class="header-2">
-                <RouterLink to="/amin">
+                <RouterLink to="/technical">
                     <button class="button-2" id="goBack">GO BACK</button>
                 </RouterLink>
             </div>

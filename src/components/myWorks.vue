@@ -1,12 +1,12 @@
 <template>
-        <div class="fitxa">
+        <div class="fitxa" :id="item.idTasca">
             <div class="caja1">
                 <div class="name" id="name" name="name">{{ item.nom }}</div>
                 <div class="description" id="description" name="description">{{ item.descripicio }}</div>
             </div>
             <div class="caja2">
                 <div class="container">
-                    <select name="status" id="status" class="status">
+                    <select name="estat" :id="'estat-' + item.idTasca" class="status" v-model="estat">
                         <option value="pendent" v-if="item.estat == 'pendent'" selected>pendent</option>
                         <option value="pedent" v-else>pendent</option>
                         <option value="proces" v-if="item.estat == 'proces'" selected>proces</option>
@@ -16,10 +16,13 @@
                     </select>
                 </div>
                 <div class="container">
-                    <input type="text" class="comment" name="comments" id="comments" placeholder="comments..." v-model="comentario">
+                    <input type="text" class="comment" name="comments" :id="'comentari-' + item.idTasca" placeholder="comments..." v-model="comentari">
                 </div>
                 <div class="container">
-                    <button class="buttonTasca" id="commentButton" name="commentButton" @click="mirarDatos">SAVE</button>
+                    <button class="buttonTasca" :id="'commentButton-' + item.idTasca" name="commentButton" @click="mirarDatos">SAVE</button>
+                </div>
+                <div class="container">
+                    <p class="msgFinish" :id="'msgFinish-' + item.idTasca">FINISHED WORK</p>
                 </div>
             </div>
         </div>
@@ -33,21 +36,37 @@ import axios from 'axios';
         props: ['item'],
         data(){
             return{
-                selectedOption: this.item.estat,
-                comentario: this.item.comentario,
+                estat: this.item.estat,
+                comentari: this.item.comentari,
             }
         },
         methods: {
-            mirarDatos(){
-                const selectStatus = document.getElementById('status').value;
-                const selectComent = document.getElementById('comments').value;
+            mirarEstado(){
+                if(this.item.estat === "final")
+                {
+                    var divEdit = document.getElementById(this.item.idTasca);
+                    divEdit.style.opacity = "70%";
 
-                if(this.item.comentario != selectComent || this.item.estat != selectStatus){
+                    var editButton = document.querySelector('#comentari-' + this.item.idTasca);
+                    var deleteButton = document.querySelector('#estat-' + this.item.idTasca);
+                    var sendButton = document.querySelector('#commentButton-' + this.item.idTasca);
+                    var msgFinish = document.querySelector('#msgFinish-' + this.item.idTasca);
+                    editButton.disabled = true;
+                    deleteButton.disabled = true;
+                    sendButton.disabled = true;
+                    msgFinish.style.display = "block";
+                }
+            },
+            mirarDatos(){
+                const selectStatus = document.querySelector('#estat-' + this.item.idTasca).value;
+                const selectComent = document.querySelector('#comentari-' + this.item.idTasca).value;
+
+                if(this.item.comentari != selectComent || this.item.estat != selectStatus){
                     const data = {
                         direccion: this.$route.name,
                         token: sessionStorage.getItem("token"),
-                        comentario: selectComent,
-                        estado: selectStatus,
+                        comentari: selectComent,
+                        estat: selectStatus,
                         idTasca: this.item.idTasca
                     }
 
@@ -60,6 +79,9 @@ import axios from 'axios';
                     })
                 }
             }
+        },
+        mounted(){
+            this.mirarEstado();
         }
     }
 </script>

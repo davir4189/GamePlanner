@@ -1,6 +1,11 @@
 <template>
     <div class="container-1" :id="item.idUsuari">
+<<<<<<< HEAD
+        <p class="name" id="name">{{ item.nom }}  {{ item.cognom }}</p>
+        <p class="role" id="role">{{ item.idUsuari }}</p>
+=======
         <p class="name" id="name">{{ item.nom }}</p>
+>>>>>>> 74af1af1dd19f1973f85209978d9eb29db3cd6a9
         <p class="role" id="role">{{ item.rol }}</p>
         <div class="container-2">
             <div class="div2">
