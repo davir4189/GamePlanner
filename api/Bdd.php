@@ -44,6 +44,7 @@ class BdD
         } else
             return false;
     }
+    //recuperamos el rol por su email y contraseña y devolvemos su rol
     public function recuperarRol($email, $contrasenya)
     {
         $resposta = null;
@@ -84,7 +85,7 @@ class BdD
             return false;
 
     }
-
+    //recuperamos el usuario por token que tiene, devolvemos su id
     public function recuperarIdUsuari_token($token)
     {
         $resposta = null;
@@ -104,7 +105,7 @@ class BdD
             return false;
 
     }
-
+    //comprobamos que existe por token sin registrar y le agregamos uno
     public function comprobarExisteixPerToken($tokenAntic)
     { //despues del login buscamos por el token
         $resposta = null;
@@ -157,7 +158,7 @@ class BdD
         $consulta->bindParam(':equipVisitant', $equipVisitant);
         $qFiles = $consulta->execute();
     }
-
+    //borra la tasca por su id
     public function borrarTasca($idTasca)
     {
         $SQL = "DELETE FROM `tasca` WHERE `tasca`.`idTasca` = :idTasca ;";
@@ -185,6 +186,7 @@ class BdD
         }
 
     }
+    //comprueba si exite la tasca
     public function veureUnaTasca($idTasca)
     {
         $resposta = null;
@@ -198,6 +200,7 @@ class BdD
             return false;
         }
     }
+    //vemos todas las tasques
     public function veureTasques()
     {
         $resposta = null;
@@ -216,6 +219,7 @@ class BdD
         }
 
     }
+    //actualizamos las tascas por parte del tecnico
     public function updateTasca($idTasca, $comentari, $estat)
     {
         $SQL = 'UPDATE tasca SET comentari = :comentari, estat = :estat WHERE idTasca = :idTasca';
@@ -232,7 +236,7 @@ class BdD
         }
     }
 
-
+    //actualizar por parte de admin y gestor
     public function updateTascaAdmin($idTasca, $nom, $descripicio, $prioritat, $estat, $comentari, $direccio, $empleat, $equipLocal, $equipVisitant, $dataCreacio)
     {
         $SQL = 'UPDATE tasca SET nom = :nom, descripicio = :descripicio, prioritat = :prioritat, estat = :estat, comentari = :comentari, direccio = :direccio,empleat= :empleat, equipLocal = :equipLocal, equipVisitant = :equipVisitant,dataCreacio=:dataCreacio WHERE idTasca = :idTasca';
@@ -251,7 +255,7 @@ class BdD
         $qFiles = $consulta->execute();
     }
 
-
+    //ver todos los usuarios
     public function veureUsers()
     {
         $resposta = null;
@@ -269,6 +273,7 @@ class BdD
             return false;
         }
     }
+    //actualiamos un usuario por su id
     public function updateUsuari($nom, $cognom, $contrasenya, $email, $rol, $apiKey, $idUsuari)
     {
         $SQL = 'UPDATE usuari SET rol=:rol,nom=:nom,cognom=:cognom,email=:email,contrasenya=:contrasenya,apiKey=:apiKey WHERE :idUsuari';
@@ -282,6 +287,8 @@ class BdD
         $consulta->bindParam(':idUsuari', $idUsuari);
         $qFiles = $consulta->execute();
     }
+
+    //comprobamos que existe el token en la bdd de token no validos
     public function existeixToken_bbd_token($token)
     {
         $SQL = 'SELECT * FROM tokenbd WHERE token=:token';
@@ -293,7 +300,7 @@ class BdD
         else
             return false;
     }
-
+    //comprobamos que existe el token en la bdd de token que esta en la tabla de usuarios esto ya son validos
     public function existeixToken_bbd_usuari($token)
     {
         $SQL = 'SELECT * FROM usuari WHERE token=:token';
@@ -325,6 +332,7 @@ class BdD
         $consulta->bindParam(':contrasenya', $contrasenya);
         $qFiles = $consulta->execute();
     }
+    //insertamos el token en la tabla de token no valido
     public function insertarToken_token($token)
     {
         $SQL = 'INSERT INTO tokenbd (token) VALUES (:token)';
@@ -332,6 +340,7 @@ class BdD
         $consulta->bindParam(':token', $token);
         $qFiles = $consulta->execute();
     }
+    //recuperamos todos los equipos
     public function recuperarEquips()
     {
         $resposta = null;
@@ -351,7 +360,7 @@ class BdD
     }
     //falta select equipo local
 
-
+    //borramos el token de la tabla de los token no validos
     public function borrarToken_token_bdd($token)
     {
         //primero miramos si el token existe
