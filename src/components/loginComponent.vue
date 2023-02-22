@@ -21,7 +21,7 @@ export default {
         login() {
             //si campos diferente de vacio entra
             if(this.email!="" || this.contrasenya !=""){
-            axios.post('http://localhost/api/', {
+            axios.post('http://gameplanner.daw.institutmontilivi.cat/api/', {
                 email: this.email,
                 contrasenya: this.contrasenya,
                 token: sessionStorage.token,

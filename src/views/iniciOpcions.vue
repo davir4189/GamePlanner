@@ -84,7 +84,7 @@ export default {
             }
             else {
                 //comprobamos que token existe
-                axios.post('http://localhost/api/', {
+                axios.post('http://gameplanner.daw.institutmontilivi.cat/api/', {
                     token: sessionStorage.getItem("token"),
                     direccion: this.$route.name
                 }).then((resultado) => {
