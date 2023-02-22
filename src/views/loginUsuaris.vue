@@ -35,7 +35,7 @@
         methods: {
             //funcion creacion cookie
             cookie(){
-                axios.post('http://localhost/api/')
+                axios.post('http://gameplanner.daw.institutmontilivi.cat/api/')
                 .then((e) => {
                     document.cookie = "token='" + e.data + "';max-age=3600;path=/";
                     sessionStorage.token=e.data;

@@ -73,7 +73,7 @@ export default {
 
                 console.log(data);
 
-                axios.put('http://localhost/api/', data)
+                axios.put('http://gameplanner.daw.institutmontilivi.cat/api/', data)
                     .then((resposta) => {
                         console.log(resposta);
                         window.location.reload();
