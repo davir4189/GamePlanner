@@ -75,9 +75,7 @@ class server
                                 $idTasca = $data->idTasca;
                                 $bdd->borrarTasca($idTasca);
 
-                            } else {
-                                echo json_encode("entra2");
-                            }
+                           
                         }
                     } else {
 
@@ -199,7 +197,7 @@ class server
             $bdd->insertarToken_token($value);
             echo $value;
         }
-
+    }
 
     }
     public function tokenAleatorio()
