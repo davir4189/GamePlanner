@@ -72,7 +72,7 @@
             },
             //funcion para borrar tarea
             borrar() {
-            axios.delete('http://localhost/api/', {
+            axios.delete('http://gameplanner.daw.institutmontilivi.cat/api/', {
                 data: { direccion: this.$route.name,token: sessionStorage.getItem("token"),idTasca: this.item.idTasca  },
 
             }).then((resposta) => {

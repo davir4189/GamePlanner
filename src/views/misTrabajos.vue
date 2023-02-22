@@ -68,7 +68,7 @@
         },
         methods: {
             getDades(){
-                axios.post('http://localhost/api/', {
+                axios.post('http://gameplanner.daw.institutmontilivi.cat/api/', {
                     direccion: this.$route.name,
                     token: sessionStorage.getItem("token"),
                 }).then((resposta) => {

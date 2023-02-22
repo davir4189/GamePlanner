@@ -62,7 +62,7 @@ export default{
                 return;
             }
 
-            axios.post('http://localhost/api/', {
+            axios.post('http://gameplanner.daw.institutmontilivi.cat/api/', {
                 token: sessionStorage.getItem("token"),
                 direccion: this.$route.name,
                 nom: this.nom,
