@@ -8,8 +8,8 @@ class server
 {
     function serve()
     {
-        $uri = $_SERVER['REQUEST_URI']; //guardamos el url que nos envia
         $method = $_SERVER['REQUEST_METHOD']; //si es un get, pull,
+
 
         //CREACION ONJETO BDD
         $bdd = new bdd();
@@ -48,24 +48,24 @@ class server
                             $rol = $bdd->recuperarRol($email, $contrasenya);
                             header('HTTP/1.1 200 OK');
                             $datosApasar = array('rol' => $rol, 'token' => $token);
+                            //pasamos los datos
                             echo json_encode($datosApasar);
                         } else {
                             echo json_encode($token); //sera falso
                             header('HTTP/1.1 404 Not Found');
                         }
                     }
-
-
                 } 
 
                 //SI RECURSO ADMIN - MANAGER - TECNIC
                 elseif ($recurso == 'admin' || $recurso == 'manager' || $recurso == 'technical') 
                 {
-                    //RECUPERAMOS ROL
+                
+                //RECUPERAMOS ROL
+                } elseif ($recurso == 'admin' || $recurso == 'manager' || $recurso == 'technical') {
                     $rol = $bdd->recuperarRol_token($token);
                     $datosApasar = array('rol' => $rol);
                     echo json_encode($datosApasar);
-
                 }
 
                 //SI RECURSO WORKS
@@ -127,6 +127,7 @@ class server
                         //SI POST
                         if ($method == 'POST') 
                         {
+
                             //LLAMAMOS METODO CREAR TASCA
                             $bdd->crearTasca($data->nom, $data->descripicio, $data->prioritat, "pendent", "", "", $data->dataTasca, $data->empleat, "", "");
                         }
@@ -148,6 +149,7 @@ class server
 
                         //LLAMAMOS METODO VER USERS
                         $usuaris = $bdd->veureUsers();
+                        //pasamos todos los usuarios
                         $datosApasar = array('rol' => $rol, 'usuaris' => $usuaris);
                         echo json_encode($datosApasar);
                     }
@@ -159,6 +161,7 @@ class server
 
                     //RECUPERAMOS ROL BDD
                     $rol = $bdd->recuperarRol_token($token);
+
 
                     //SI ROL ADMIN
                     if($rol == 'admin')
@@ -208,6 +211,7 @@ class server
                     $comentari = null;
                     $estat = null;
 
+
                     //SI PUT
                     if ($method == 'PUT') {
 
@@ -248,7 +252,6 @@ class server
 
             //INSERT TOKEN BDD
             $bdd->insertarToken_token($value);
-            $datosApasar = array('value' => $value, 'token' => $token, 'dataPasar' => $data);
             echo $value;
         }
 

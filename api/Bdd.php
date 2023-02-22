@@ -480,7 +480,6 @@ class BdD
         catch(PDOException $e){
             echo "error" . $e->getMessage();
         }
-
     }
 
     //FUNCION BORRAR TOKEN BASE DE DATOS TOKEN
